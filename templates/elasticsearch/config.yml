@@ -1,7 +1,9 @@
 name: Elasticsearch
 description: |
   Elasticsearch server version 1.7.1 
+  
+  Elasticsearch, you know for search!
 
-Elasticsearch, you know for search!
+  Elasticsearch is a trademark of Elasticsearch BV, registered in the U.S. and in other countries
 version: 1.7.1
 category: ELK
