@@ -1,4 +1,4 @@
-stack:
+.stack:
   questions:
     - variable: cluster_name
       description: "Unique name to assign to your Elasticsearch cluster."
