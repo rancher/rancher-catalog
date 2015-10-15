@@ -1,0 +1,7 @@
+name: Elasticsearch
+description: |
+  Elasticsearch server version 1.7.1 
+
+Elasticsearch, you know for search!
+version: 1.7.1
+category: ELK
