@@ -4,7 +4,7 @@
       description: "Unique name to assign to your Elasticsearch cluster."
       label: "Cluster Name"
       type: "string"
-      required: "true"
+      required: true
       default: "es"
 elasticsearch-masters:
   metadata:
