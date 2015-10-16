@@ -1,12 +1,12 @@
 logspout:
   restart: always
   environment:
-    ROUTE_URIS: 'logstash://logstash:5000'
+    ROUTE_URIS: "${route_uri}"
     LOGSPOUT: 'ignore'
   volumes:
   - '/var/run/docker.sock:/var/run/docker.sock'
   external_links:
-  - logstash/logstash-collector:logstash
+  - ${external_link_target}
   labels:
     io.rancher.scheduler.global: 'true'
     io.rancher.container.hostname_override: container_name
