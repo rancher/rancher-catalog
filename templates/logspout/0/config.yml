@@ -1,0 +1,5 @@
+name: Logspout
+version: v0.2.0-rancher1
+description: |
+  Logspout is a log router for Docker containers.
+uuid: logspout-0
