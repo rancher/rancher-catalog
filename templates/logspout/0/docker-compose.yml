@@ -1,0 +1,15 @@
+logspout:
+  restart: always
+  environment:
+    ROUTE_URIS: 'logstash://logstash:5000'
+    LOGSPOUT: 'ignore'
+  volumes:
+  - '/var/run/docker.sock:/var/run/docker.sock'
+  external_links:
+  - logstash/logstash-collector:logstash
+  labels:
+    io.rancher.scheduler.global: 'true'
+    io.rancher.container.hostname_override: container_name
+  tty: true
+  image: rancher/logspout-logstash:v0.2.0
+  stdin_open: true
