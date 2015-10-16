@@ -1,0 +1,5 @@
+name: Logspout
+description: |
+  Gliderlabs Logspout with Logstash adapter.
+version: v0.2.0
+category: "Logging Tools"

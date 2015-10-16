@@ -1,0 +1,19 @@
+.stack:
+  questions:
+    - variable: "route_uri"
+      label: "Logspout route for logs"
+      type: "string"
+      required: true
+      default: "logstash://logstash:5000"
+      description: |
+        This will be the target where all logs are sent. 
+        By default it uses logstash and points to a linked service
+        logstash.
+    - variable: "external_link_target"
+      label: "External Stack Link"
+      type: "string"
+      required: true
+      default: "logstash/logstash-collector:logstash"
+      description: |
+        Name of the stack/service and DNS name to send logs to. The DNS
+        Name should line up with the route uri.
