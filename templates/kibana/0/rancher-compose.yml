@@ -12,6 +12,3 @@ nginx-proxy:
       conf:
         servername: "kibana"
         upstream_port: 5601 
-      users:
-        - username: testing
-          password: 1
