@@ -46,7 +46,7 @@ logstash-indexer:
       filters: |
         ${indexer_filters}
       outputs: |
-        ${indexer_ouptuts}
+        ${indexer_outputs}
 logstash-collector:
   metadata:
     logstash:
