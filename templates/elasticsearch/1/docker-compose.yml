@@ -1,0 +1,62 @@
+elasticsearch-conf-masters:
+  image: rancher/elasticsearch-conf:v0.2.1
+  labels:
+    io.rancher.container.hostname_override: container_name
+  volumes_from:
+    - elasticsearch-masters
+  net: "container:elasticsearch-masters"
+elasticsearch-conf-datanodes:
+  image: rancher/elasticsearch-conf:v0.2.1
+  labels:
+    io.rancher.container.hostname_override: container_name
+  volumes_from:
+    - elasticsearch-datanodes
+  net: "container:elasticsearch-datanodes"
+elasticsearch-conf-clients:
+  image: rancher/elasticsearch-conf:v0.2.1
+  labels:
+    io.rancher.container.hostname_override: container_name
+  volumes_from:
+    - elasticsearch-clients
+  net: "container:elasticsearch-clients"
+elasticsearch-masters:
+  labels:
+    io.rancher.sidekicks: elasticsearch-conf-masters
+    elasticsearch.master.config.version: '0'
+    io.rancher.container.hostname_override: container_name
+  image: rancher/elasticsearch-bootstrap:v0.3.0-1.7.3
+  volumes:
+    - /usr/share/elasticsearch/config
+elasticsearch-datanodes:
+  labels:
+    io.rancher.sidekicks: elasticsearch-conf-datanodes
+    elasticsearch.datanode.config.version: '0'
+    io.rancher.container.hostname_override: container_name
+    io.rancher.scheduler.affinity:container_label_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
+  image: rancher/elasticsearch-bootstrap:v0.3.0-1.7.3
+  volumes:
+    - /mnt/data:/usr/share/elasticsearch/data
+    - /usr/share/elasticsearch/config
+  links:
+    - elasticsearch-masters:es-masters
+elasticsearch-clients:
+  labels:
+    io.rancher.sidekicks: elasticsearch-conf-clients
+    elasticsearch.client.config.version: '0'
+    io.rancher.container.hostname_override: container_name
+  image: rancher/elasticsearch-bootstrap:v0.3.0-1.7.3
+  volumes:
+    - /usr/share/elasticsearch/config
+  links:
+    - elasticsearch-masters:es-masters
+kopf:
+  image: rancher/kopf:v0.1.0
+  ports: 
+    - "80:80"
+  environment:
+    KOPF_SERVER_NAME: 'es.dev'
+    KOPF_ES_SERVERS: 'es-clients:9200'
+  labels:
+    io.rancher.container.hostname_override: container_name
+  links:
+    - elasticsearch-clients:es-clients
