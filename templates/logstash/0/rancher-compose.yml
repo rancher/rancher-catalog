@@ -18,7 +18,7 @@
         directly to filter { } section of logstash.conf
       label: "Logstash filters"
       type: "multiline"
-      required: true
+      required: false
       default: ""
     - variable: "indexer_outputs"
       description: |
@@ -33,6 +33,14 @@
           protocol => "http"
           index => "logstash-%{+YYYY.MM.dd}"
         }
+    - variable: "elasticsearch_link"
+      description: |
+        stack/service link or external service link to elasticsearch
+        cluster.
+      label: "Elasticsearch stack/service"
+      default: "es/elasticsearch-clients"
+      required: true
+      type: "string"
 logstash-indexer:
   metadata:
     logstash:
