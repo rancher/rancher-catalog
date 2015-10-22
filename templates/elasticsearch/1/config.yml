@@ -1,4 +1,0 @@
-name: "Elasticsearch"
-version: "1.7.3-rancher1"
-description: "Elasticsearch. You know, for search"
-uuid: elasticsearch-1
