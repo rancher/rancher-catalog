@@ -1,4 +1,8 @@
-.stack:
+.catalog:
+  name: "Logstash"
+  version: "1.5.3-1-rancher1"
+  description: "Logstash: Process Any Data, From Any Source"
+  uuid: logstash-0
   questions:
     - variable: "collector_inputs"
       description: |
