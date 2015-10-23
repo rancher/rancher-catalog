@@ -6,7 +6,7 @@ logspout:
   volumes:
   - '/var/run/docker.sock:/var/run/docker.sock'
   external_links:
-  - ${external_link_target}
+  - ${target_link}:${target_link_name}
   labels:
     io.rancher.scheduler.global: 'true'
     io.rancher.container.hostname_override: container_name

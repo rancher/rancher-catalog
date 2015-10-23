@@ -14,11 +14,20 @@
         This will be the target where all logs are sent. 
         By default it uses logstash and points to a linked service
         logstash.
-    - variable: "external_link_target"
-      label: "External Stack Link"
+    - variable: "target_link"
+      label: "Logging Target Link"
       type: "service"
       required: true
-      default: "logstash/logstash-collector:logstash"
+      default: "logstash/logstash"
       description: |
-        Name of the stack/service and DNS name to send logs to. The DNS
+        Name of the stack/service to send logs to.
+    - variable: "target_link_name"
+      label: "Link Name"
+      type: "string"
+      required: true
+      default: "logstash"
+      description: |
+        Alias link name
+      description: |
+        DNS name to send logs to. The DNS
         Name should line up with the route uri.
