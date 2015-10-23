@@ -7,7 +7,7 @@
     - variable: "elasticsearch_source"
       description: "Link to elasticsearch service or stack/service"
       label: "Elasticsearch source"
-      type: "string"
+      type: "service"
       required: true
       default: "es/elasticsearch-clients"
 nginx-proxy:

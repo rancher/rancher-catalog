@@ -16,7 +16,7 @@
         logstash.
     - variable: "external_link_target"
       label: "External Stack Link"
-      type: "string"
+      type: "service"
       required: true
       default: "logstash/logstash-collector:logstash"
       description: |
