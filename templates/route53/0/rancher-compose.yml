@@ -2,7 +2,7 @@
   name: "Route53 DNS"
   version: "v0.1.5-rancher1"
   description: "Rancher External DNS service powered by Amazon Route53. Requires Rancher version 0.44.0"
-  uuid: externaldns-0
+  uuid: route53-0
   questions:
     - variable: "AWS_ACCESS_KEY"
       label: "AWS access key"
@@ -26,7 +26,7 @@
       type: "string"
       required: true
 
-externaldns:
+route53:
   health_check:
     port: 1000
     interval: 2000

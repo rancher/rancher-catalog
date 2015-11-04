@@ -1,4 +1,4 @@
-externaldns:
+route53:
   image: rancher/external-dns:v0.1.5
   expose: 
    - 1000
