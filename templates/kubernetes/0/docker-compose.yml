@@ -16,7 +16,7 @@ kubelet:
         - run-kubelet.sh
         - master
         - ${api_server_port}
-    image: rancher/k8s:dev
+    image: cjellick/k8s:v0.1.0-rc1
     volumes:
         - /var/run/docker.sock:/var/run/docker.sock
         - /var/lib/rancher/kubernetes:/var/lib/rancher/kubernetes
@@ -36,7 +36,7 @@ proxy:
         - --master=http://master:${api_server_port}
         - --v=2
         - --healthz-bind-address=0.0.0.0
-    image: rancher/k8s:dev
+    image: cjellick/k8s:v0.1.0-rc1
     privileged: true
     net: host
     links:
@@ -63,7 +63,7 @@ api-server:
         - --insecure-bind-address=0.0.0.0
         - --insecure-port=${api_server_port}
         - --cloud-provider=rancher
-    image: rancher/kube-apiserver:dev
+    image: cjellick/kube-apiserver:v0.1.0-rc1
     ports:
         - ${api_server_port}:8080
     links:
@@ -74,7 +74,7 @@ scheduler:
         - /usr/local/bin/kube-scheduler
         - --master=http://master:${api_server_port}
         - --address=0.0.0.0
-    image: rancher/kube-scheduler:dev
+    image: cjellick/kube-scheduler:v0.1.0-rc1
     links:
         - api-server:master
 
@@ -84,7 +84,7 @@ controller-manager:
         - --master=http://master:${api_server_port}
         - --cloud-provider=rancher
         - --address=0.0.0.0
-    image: rancher/kube-controller-manager:dev
+    image: cjellick/kube-controller-manager:v0.1.0-rc1
     labels:
         io.rancher.container.create_agent: true
         io.rancher.container.agent.role: environment
@@ -97,7 +97,7 @@ rancher-kubernetes-agent:
         io.rancher.container.agent_service.labels_provider: true
     environment:
         KUBERNETES_URL: http://master:${api_server_port}
-    image: rancher/kubernetes-agent:dev
+    image: cjellick/kubernetes-agent:v0.1.0-rc1
     privileged: true
     volumes:
         - /var/run/docker.sock:/var/run/docker.sock
