@@ -97,7 +97,7 @@ rancher-kubernetes-agent:
         io.rancher.container.agent_service.labels_provider: true
     environment:
         KUBERNETES_URL: http://master:${api_server_port}
-    image: cjellick/kubernetes-agent:v0.1.0-rc1
+    image: cjellick/kubernetes-agent:v0.1.0-rc2
     privileged: true
     volumes:
         - /var/run/docker.sock:/var/run/docker.sock
