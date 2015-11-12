@@ -15,13 +15,13 @@
       options:
         - jenkins
         - root
-    - variable: jenkins_pass
+    - variable: jenkins_user
       label: "Jenkins username"
       type: "string"
       required: false
       description: |
         Username to authenticate to a secured Jenkins host with.
-    - variable: jenkins_user
+    - variable: jenkins_pass
       label: "Jenkins password"
       type: "string"
       required: false
