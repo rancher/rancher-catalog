@@ -1,7 +1,7 @@
 sysdig-agent:
   container_name: sysdig-agent
   privileged: true
-  image: sysdig/agent
+  image: sysdig/agent:${VERSION}
   net: "host"
   pid: "host"
   environment:
