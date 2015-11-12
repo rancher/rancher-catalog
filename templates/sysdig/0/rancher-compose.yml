@@ -1,0 +1,11 @@
+.catalog:
+  name: "Sysdig"
+  version: "latest"
+  description: "Container-Native System Visibility and Troubleshooting"
+  uuid: sysdig-0
+  questions:
+    - variable: "HOST_EXCLUDE_LABEL"
+      label: "Host exclude label"
+      description: "Specify a host label here that can be used to exclude deployment of the sysdig container on any given host. Eg: sysdig.agent=false (you could then add the label 'sysdig.agent=false' to any host to exclude sysdig from that host)."
+      type: "string"
+      required: false

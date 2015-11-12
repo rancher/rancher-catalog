@@ -1,0 +1,21 @@
+.catalog:
+  name: "Sysdig Cloud"
+  version: "latest"
+  description: "Container-Native Application and Infrastructure Monitoring"
+  uuid: sysdig-cloud-0
+  questions:
+    - variable: "SDC_ACCESS_KEY"
+      label: "Sysdig Cloud access key"
+      description: "Your unique Sysdig Cloud access key - register for a Sysdig Cloud account at www.sysdig.com to receive a key."
+      type: "string"
+      required: true
+    - variable: "SDC_TAGS"
+      label: "Sysdig Cloud tags"
+      description: "Tags to be applied to all hosts on which the Sysdig Cloud container is deployed - these will surface in the Sysdig Cloud app. Should be a comma-separated list in the form of TAG_NAME:TAG_VALUE. For example: role:webserver,location:europe."
+      type: "string"
+      required: false
+    - variable: "HOST_EXCLUDE_LABEL"
+      label: "Host exclude label"
+      description: "Specify a Rancher host label here that can be used to exclude deployment of the Sysdig Cloud container on any given host. Eg: sysdig.agent=false (you could then add the label 'sysdig.agent=false' to any Rancher host to exclude Sysdig from that host). To filter on any of multiple labels, use a comma-separated list."
+      type: "string"
+      required: false
