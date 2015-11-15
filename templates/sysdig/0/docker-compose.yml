@@ -1,6 +1,8 @@
 sysdig:
   container_name: sysdig
   privileged: true
+  interactive: true
+  tty: true
   image: sysdig/sysdig:${VERSION}
   volumes:
     - /var/run/docker.sock:/host/var/run/docker.sock
