@@ -1,7 +1,7 @@
 sysdig:
   container_name: sysdig
   privileged: true
-  interactive: true
+  stdin_open: true
   tty: true
   image: sysdig/sysdig:${VERSION}
   volumes:
