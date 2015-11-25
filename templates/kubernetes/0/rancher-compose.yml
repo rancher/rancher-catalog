@@ -1,6 +1,6 @@
 .catalog:
     name: Kubernetes
-    version: v0.1.0-rancher1
+    version: v1.1.0-rancher1
     description: Manage a cluster of Linux containers as a single system to accelerate Dev and simplify Ops.
     uuid: kubernetes-0
     questions:
@@ -8,14 +8,8 @@
           label: "Kubernetes API port"
           type: "string"
           required: true
-          default: "8080"
+          default: "8090"
           description: This is the port that the Kubernetes API server should listen on.
-        - variable: "etcd_port"
-          label: "Etcd port"
-          type: "string"
-          required: true
-          default: "4001"
-          description: This is the port that etcd should listen on.
 
 api-server:
     service_schemas:
