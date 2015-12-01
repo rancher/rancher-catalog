@@ -1,7 +1,5 @@
 glusterfs-server:
   image: rancher/glusterfs:v0.1.3
-  devices:
-    - /dev/fuse:/dev/fuse:rwm
   cap_add:
     - SYS_ADMIN
   volumes_from:
