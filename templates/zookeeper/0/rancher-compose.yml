@@ -6,7 +6,7 @@
   minimum_rancher_version: v0.46.0
   uuid: zookeeper-0
   questions:
-    variable: "scale"
+    - variable: "scale"
       description: "Number of Zookeeper nodes. Note: it should be an odd number"
       label: "Number of Nodes:"
       required: true
