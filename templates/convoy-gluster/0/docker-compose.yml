@@ -8,16 +8,16 @@ convoy-gluster:
   volumes:
     - /lib/modules:/lib/modules:ro
     - /proc:/host/proc
-    - /run:/host/run
+    - /var/run:/host/var/run
     - /etc/docker/plugins:/etc/docker/plugins
   external_links:
     - "${GLUSTERFS_SERVICE}:glusterfs"
-  image: rancher/convoy-agent:v0.1.1
+  image: rancher/convoy-agent:v0.1.2
   command: volume-agent-glusterfs
 
 convoy-gluster-storagepool:
   labels:
     io.rancher.container.create_agent: 'true'
     io.rancher.scheduler.affinity:host_label_soft: ${HOST_LABEL}
-  image: rancher/convoy-agent:v0.1.0
+  image: rancher/convoy-agent:v0.1.2
   command: storagepool-agent
