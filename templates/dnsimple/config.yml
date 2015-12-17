@@ -1,0 +1,5 @@
+name: DNSimple DNS
+description: |
+  Rancher External DNS service powered by DNSimple
+version: v0.1.9-rancher1
+category: "Rancher services"
