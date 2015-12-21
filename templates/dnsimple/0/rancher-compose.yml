@@ -8,6 +8,7 @@
     - variable: "DNSIMPLE_EMAIL"
       label: "DNSimple account email address"
       description: "EMail address associated with your DNSimple account"
+      type: "string"
       required: true
     - variable: "DNSIMPLE_TOKEN"
       label: "DNSimple API token"
@@ -15,8 +16,8 @@
       type: "string"
       required: true
     - variable: "ROOT_DOMAIN"
-      label: "Hosted zone"
-      description: "Route53 hosted zone name (zone has to be pre-created). DNS entries will be created for <service>.<stack>.<environment>.<hosted zone>"
+      label: "Root domain"
+      description: "DNS entries will be created for <service>.<stack>.<environment>.<root domain>"
       type: "string"
       required: true
     - variable: "TTL"
