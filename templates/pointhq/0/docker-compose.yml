@@ -1,5 +1,5 @@
 pointhq:
-  image: rancher/external-dns:v0.1.10
+  image: rancher/external-dns:v0.2.0
   command: --provider pointhq
   expose: 
    - 1000
