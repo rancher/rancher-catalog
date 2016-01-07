@@ -4,5 +4,5 @@ Glider Labs Logspout with Logstash adapter
 
 ### Info:
 
-For any services to use Logspout, please make sure to disable the default console options to **None** in Advanced Options of a service. 
+For any services launched from the Rancher UI to use Logspout, please make sure to disable the '-t' [tty] option in the Advanced Options of the service definition. 
  
