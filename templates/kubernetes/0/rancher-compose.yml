@@ -2,7 +2,6 @@
     name: Kubernetes
     version: v1.1.0-rancher1
     description: Manage a cluster of Linux containers as a single system to accelerate Dev and simplify Ops.
-    uuid: kubernetes-0
     questions:
         - variable: "api_server_port"
           label: "Kubernetes API port"

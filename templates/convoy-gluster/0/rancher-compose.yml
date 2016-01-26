@@ -2,7 +2,6 @@
     name: "Convoy GlusterFS"
     version: "v0.1"
     description: "Convoy GlusterFS - Docker volume plugin"
-    uuid: "convoy-0"
     questions:
      - variable: "VOLUME_POOL"
        description: "Name of the GlusterFS Volume"

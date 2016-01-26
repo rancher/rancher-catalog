@@ -2,7 +2,6 @@
   name: "Sysdig Cloud"
   version: "v0"
   description: "Container-Native Application and Infrastructure Monitoring"
-  uuid: sysdig-cloud-0
   questions:
     - variable: "SDC_ACCESS_KEY"
       label: "Sysdig Cloud access key"

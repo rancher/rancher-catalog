@@ -2,7 +2,6 @@
   name: "Sysdig"
   version: "v0"
   description: "Container-Native System Visibility and Troubleshooting"
-  uuid: sysdig-0
   questions:
     - variable: "VERSION"
       label: "Sysdig version"
