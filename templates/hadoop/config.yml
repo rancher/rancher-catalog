@@ -1,5 +1,5 @@
 name: Hadoop + Yarn
 description: |
-  EXPERIMENTAL - Hadoop + Yarn Big Data Tools. (Requires 2+ nodes)
+  (Experimental - Requires 2+ hosts) Hadoop + Yarn big data tools
 version: 2.7.1-rancher1
 category: Big Data

@@ -2,7 +2,6 @@
   name: "PointHQ DNS"
   version: "v0.2.1-rancher1"
   description: "Rancher External DNS service powered by PointHQ. Requires Rancher version 0.44.0"
-  uuid: pointhq-1
   minimum_rancher_version: v0.44.0
   questions:
     - variable: "POINTHQ_EMAIL"

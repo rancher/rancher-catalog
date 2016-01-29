@@ -2,7 +2,6 @@
     name: "Convoy NFS"
     version: "v0.2"
     description: "Convoy NFS - Docker volume plugin"
-    uuid: "convoy-nfs-1"
     questions:
      - variable: "NFS_SERVER"
        description: "IP or hostname of the NFS Server"
