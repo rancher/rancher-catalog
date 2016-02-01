@@ -38,7 +38,7 @@ galera:
       wsrep_provider=/usr/lib/galera/libgalera_smm.so
       wsrep_provider_options="gcache.size = 2G"
       wsrep_sst_method=mysqldump
-      wsrep_sst_auth=root:password
+      wsrep_sst_auth=root:${mysql_root_password}
       progress=1
 galera-lb:
   scale: 1
