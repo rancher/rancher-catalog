@@ -1,42 +1,45 @@
 kubelet:
     labels:
-        io.rancher.container.dns: true
-        io.rancher.container.create_agent: true
+        io.rancher.container.dns: "true"
+        io.rancher.container.create_agent: "true"
         io.rancher.container.agent.role: environment
-        io.rancher.scheduler.global: true
+        io.rancher.scheduler.global: "true"
     command:
         - kubelet
-        - --api_servers=http://master:8080
+        - --api_servers=http://master
         - --allow-privileged=true
-        - --containerized=true
         - --register-node=true
         - --cloud-provider=rancher
         - --healthz-bind-address=0.0.0.0
-    image: rancher/k8s:v1.1.0-rancher1
+        - --cluster-dns=169.254.169.250
+        - --cluster-domain=cluster.local
+    image: rancher/k8s:v1.2.0-alpha.8-rancher-1
     volumes:
         - /var/run/docker.sock:/var/run/docker.sock
-        - /var/lib/rancher/kubernetes:/var/lib/rancher/kubernetes
+        - /var/run:/host/var/run
+        - /var/lib/docker:/var/lib/docker
     net: host
     pid: host
     ipc: host
     privileged: true
     links:
-        - api-server:master
+        - kubernetes:master
 
 proxy:
     labels:
-        io.rancher.container.dns: true
-        io.rancher.scheduler.global: true
+        io.rancher.container.dns: "true"
+        io.rancher.scheduler.global: "true"
     command:
-        - kube-proxy
-        - --master=http://master:8080
+        - /kube-proxy
+        - --master=http://master
         - --v=2
         - --healthz-bind-address=0.0.0.0
-    image: rancher/k8s:v1.1.0-rancher1
+        - --proxy-mode=userspace
+    image: rancher/k8s:v1.2.0-alpha.8-rancher-1
     privileged: true
     net: host
     links:
-        - api-server:master
+        - kubernetes:master
 
 etcd:
     command:
@@ -46,54 +49,62 @@ etcd:
         - --data-dir=/var/etcd/data
     image: gcr.io/google_containers/etcd:2.0.12
 
-api-server:
+kubernetes:
     labels:
-        io.rancher.container.create_agent: true
+        io.rancher.container.create_agent: "true"
         io.rancher.container.agent.role: environment
     command: 
         - /usr/local/bin/kube-apiserver
         - --service-cluster-ip-range=10.43.0.0/16
         - --etcd-servers=http://etcd:4001
         - --insecure-bind-address=0.0.0.0
-        - --insecure-port=8080
+        - --insecure-port=80
         - --cloud-provider=rancher
-    image: rancher/kube-apiserver:v1.1.0-rancher1
-    ports:
-        - ${api_server_port}:8080
+    image: rancher/kube-apiserver:v1.2.0-alpha.8-rancher-1
     links:
         - etcd
+
+kubectld:
+    labels:
+        io.rancher.k8s.kubectld: "true"
+    environment:
+        SERVER: http://master
+        LISTEN: ":8091"
+    image: rancher/kubectld:v0.0.1
+    links:
+        - kubernetes:master
 
 scheduler:
     command:
         - /usr/local/bin/kube-scheduler
-        - --master=http://master:8080
+        - --master=http://master
         - --address=0.0.0.0
-    image: rancher/kube-scheduler:v1.1.0-rancher1
+    image: rancher/kube-scheduler:v1.2.0-alpha.8-rancher-1
     links:
-        - api-server:master
+        - kubernetes:master
 
 controller-manager:
     command:
         - /usr/local/bin/kube-controller-manager
-        - --master=http://master:8080
+        - --master=http://master
         - --cloud-provider=rancher
         - --address=0.0.0.0
-    image: rancher/kube-controller-manager:v1.1.0-rancher1
+    image: rancher/kube-controller-manager:v1.2.0-alpha.8-rancher-1
     labels:
-        io.rancher.container.create_agent: true
+        io.rancher.container.create_agent: "true"
         io.rancher.container.agent.role: environment
     links:
-        - api-server:master
+        - kubernetes:master
 
 rancher-kubernetes-agent:
     labels:
-        io.rancher.container.create_agent: true
-        io.rancher.container.agent_service.labels_provider: true
+        io.rancher.container.create_agent: "true"
+        io.rancher.container.agent_service.labels_provider: "true"
     environment:
-        KUBERNETES_URL: http://master:8080
-    image: rancher/kubernetes-agent:v0.0.1
+        KUBERNETES_URL: http://master
+    image: rancher/kubernetes-agent:v0.0.2
     privileged: true
     volumes:
         - /var/run/docker.sock:/var/run/docker.sock
     links:
-        - api-server:master
+        - kubernetes:master
