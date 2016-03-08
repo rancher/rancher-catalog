@@ -7,6 +7,7 @@ sysdig-agent:
   environment:
     ACCESS_KEY: ${SDC_ACCESS_KEY}
     TAGS: "${SDC_TAGS}"
+    ADDITIONAL_CONF: "${SDC_ADDITIONAL_CONF}"
   volumes:
     - /var/run/docker.sock:/host/var/run/docker.sock
     - /dev:/host/dev
