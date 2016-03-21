@@ -1,5 +1,0 @@
-name: MongoDB
-description: |
-  MongoDB Replica Set.
-version: 3.0.0-rancher1
-category: Database
