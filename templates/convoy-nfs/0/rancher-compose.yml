@@ -1,6 +1,6 @@
 .catalog:
     name: "Convoy NFS"
-    version: "v0.1.0"
+    version: "v0.1"
     description: "Convoy NFS - Docker volume plugin"
     questions:
      - variable: "NFS_SERVER"
