@@ -1,16 +1,13 @@
 .catalog:
   name: "Kubernetes"
-  version: "v0.1.0-rancher1"
+  version: "v1.2.4-rancher4"
   description: "Rancher Kubernetes service"
-  questions:
-      - variable: "api_server_port"
-        label: "Kubernetes API port"
-        type: "string"
-        required: true
-        default: "8090"
-        description: This is the port that the Kubernetes API server should listen on.
+  minimum_rancher_version: v1.1.0
 
 kubernetes:
+    metadata:
+        sans:
+        - "IP:10.43.0.1"
     health_check:
         request_line: GET /healthz HTTP/1.0
         port: 80
@@ -21,11 +18,12 @@ kubernetes:
     retain_ip: true
 
 etcd:
+    scale: 3
     health_check:
         request_line: GET /health HTTP/1.0
-        port: 4001
-        interval: 2000
-        response_timeout: 2000
+        port: 2379
+        interval: 5000
+        response_timeout: 3000
         unhealthy_threshold: 3
         healthy_threshold: 2
 

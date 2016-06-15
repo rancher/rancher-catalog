@@ -6,24 +6,26 @@ kubelet:
         io.rancher.scheduler.global: "true"
     command:
         - kubelet
-        - --api_servers=http://master
+        - --kubeconfig=/etc/kubernetes/ssl/kubeconfig
+        - --api_servers=https://kubernetes:6443
         - --allow-privileged=true
         - --register-node=true
         - --cloud-provider=rancher
         - --healthz-bind-address=0.0.0.0
         - --cluster-dns=169.254.169.250
         - --cluster-domain=cluster.local
-    image: rancher/k8s:v1.2.4-rancher2
+    image: rancher/k8s:v1.2.4-rancher4
     volumes:
         - /var/run/docker.sock:/var/run/docker.sock
         - /var/run:/host/var/run
         - /var/lib/docker:/var/lib/docker
+        - /dev:/host/dev
     net: host
     pid: host
     ipc: host
     privileged: true
     links:
-        - kubernetes:master
+        - kubernetes
 
 proxy:
     labels:
@@ -35,48 +37,71 @@ proxy:
         - --v=2
         - --healthz-bind-address=0.0.0.0
         - --proxy-mode=userspace
-    image: rancher/k8s:v1.2.4-rancher2
+    image: rancher/k8s:v1.2.4-rancher4
     privileged: true
     net: host
     links:
         - kubernetes:master
 
 etcd:
-    command:
-        - /usr/local/bin/etcd
-        - --advertise-client-urls=http://etcd:4001
-        - --listen-client-urls=http://0.0.0.0:4001
-        - --data-dir=/var/etcd/data
-    image: rancher/etcd:2.0.12
-    labels:
-        io.rancher.sidekicks: etcd-data
-    volumes_from:
-        - etcd-data
+  image: rancher/etcd:v2.3.6
+  labels:
+    io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
+    io.rancher.sidekicks: etcd-data
+    io.rancher.service.allocate.skip.serialize: 'true'
+    io.rancher.container.start_once: 'true'
+  environment:
+    ETCD_DATA_DIR: /data
+    ETCDCTL_ENDPOINT: http://etcd:2379
+  links:
+  - etcd-data
+  - discovery
+  volumes_from:
+  - etcd-data
 
 etcd-data:
-    image: busybox
-    volumes:
-        - /var/etcd/data
-    labels:
-        io.rancher.container.start_once: "true"
-        io.rancher.container.hostname_override: container_name
-    command: /bin/true
-    net: none
+  image: busybox
+  command: /bin/true
+  net: none
+  volumes:
+  - /data
+  labels:
+    io.rancher.container.start_once: 'true'
+
+discovery:
+  image: rancher/etcd:v2.3.6
+  command: discovery_node
+  labels:
+    io.rancher.container.start_once: 'true'
+    io.rancher.sidekicks: bootstrap
+
+bootstrap:
+  image: rancher/etcd:v2.3.6
+  command: bootstrap
+  links:
+  - discovery
+  labels:
+    io.rancher.container.start_once: 'true'
+  environment:
+    ETCDCTL_ENDPOINT: http://etcd:2379
 
 kubernetes:
     labels:
         io.rancher.container.create_agent: "true"
-        io.rancher.container.agent.role: environment
+        io.rancher.container.agent.role: environmentAdmin
     command: 
         - kube-apiserver
         - --service-cluster-ip-range=10.43.0.0/16
-        - --etcd-servers=http://etcd:4001
+        - --etcd-servers=http://etcd:2379
         - --insecure-bind-address=0.0.0.0
         - --insecure-port=80
         - --cloud-provider=rancher
         - --allow_privileged=true
-        - --admission-control=NamespaceLifecycle,LimitRanger,SecurityContextDeny,ResourceQuota
-    image: rancher/k8s:v1.2.4-rancher2
+        - --admission-control=NamespaceLifecycle,LimitRanger,SecurityContextDeny,ResourceQuota,ServiceAccount
+        - --client-ca-file=/etc/kubernetes/ssl/ca.pem
+        - --tls-cert-file=/etc/kubernetes/ssl/cert.pem
+        - --tls-private-key-file=/etc/kubernetes/ssl/key.pem
+    image: rancher/k8s:v1.2.4-rancher4
     links:
         - etcd
 
@@ -86,7 +111,7 @@ kubectld:
     environment:
         SERVER: http://master
         LISTEN: ":8091"
-    image: rancher/kubectld:v0.1.2
+    image: rancher/kubectld:v0.2.0
     links:
         - kubernetes:master
 
@@ -95,22 +120,25 @@ scheduler:
         - kube-scheduler
         - --master=http://master
         - --address=0.0.0.0
-    image: rancher/k8s:v1.2.4-rancher2
+    image: rancher/k8s:v1.2.4-rancher4
     links:
         - kubernetes:master
 
 controller-manager:
     command:
         - kube-controller-manager
-        - --master=http://master
+        - --master=https://kubernetes:6443
         - --cloud-provider=rancher
         - --address=0.0.0.0
-    image: rancher/k8s:v1.2.4-rancher2
+        - --kubeconfig=/etc/kubernetes/ssl/kubeconfig
+        - --root-ca-file=/etc/kubernetes/ssl/ca.pem
+        - --service-account-private-key-file=/etc/kubernetes/ssl/key.pem
+    image: rancher/k8s:v1.2.4-rancher4
     labels:
         io.rancher.container.create_agent: "true"
-        io.rancher.container.agent.role: environment
+        io.rancher.container.agent.role: environmentAdmin
     links:
-        - kubernetes:master
+        - kubernetes
 
 rancher-kubernetes-agent:
     labels:
