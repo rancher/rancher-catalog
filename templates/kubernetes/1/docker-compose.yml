@@ -14,7 +14,7 @@ kubelet:
         - --healthz-bind-address=0.0.0.0
         - --cluster-dns=169.254.169.250
         - --cluster-domain=cluster.local
-    image: rancher/k8s:v1.2.4-rancher4
+    image: rancher/k8s:v1.2.4-rancher6
     volumes:
         - /var/run/docker.sock:/var/run/docker.sock
         - /var/run:/host/var/run
@@ -37,7 +37,7 @@ proxy:
         - --v=2
         - --healthz-bind-address=0.0.0.0
         - --proxy-mode=userspace
-    image: rancher/k8s:v1.2.4-rancher4
+    image: rancher/k8s:v1.2.4-rancher6
     privileged: true
     net: host
     links:
@@ -101,7 +101,7 @@ kubernetes:
         - --client-ca-file=/etc/kubernetes/ssl/ca.pem
         - --tls-cert-file=/etc/kubernetes/ssl/cert.pem
         - --tls-private-key-file=/etc/kubernetes/ssl/key.pem
-    image: rancher/k8s:v1.2.4-rancher4
+    image: rancher/k8s:v1.2.4-rancher6
     links:
         - etcd
 
@@ -120,7 +120,7 @@ scheduler:
         - kube-scheduler
         - --master=http://master
         - --address=0.0.0.0
-    image: rancher/k8s:v1.2.4-rancher4
+    image: rancher/k8s:v1.2.4-rancher6
     links:
         - kubernetes:master
 
@@ -133,7 +133,7 @@ controller-manager:
         - --kubeconfig=/etc/kubernetes/ssl/kubeconfig
         - --root-ca-file=/etc/kubernetes/ssl/ca.pem
         - --service-account-private-key-file=/etc/kubernetes/ssl/key.pem
-    image: rancher/k8s:v1.2.4-rancher4
+    image: rancher/k8s:v1.2.4-rancher6
     labels:
         io.rancher.container.create_agent: "true"
         io.rancher.container.agent.role: environmentAdmin
