@@ -1,8 +1,0 @@
-{
-  "catalogs": {
-    "library": {
-      "url": "/scratch",
-      "branch": "fix_branches_in_prs"
-    }
-  }
-}
