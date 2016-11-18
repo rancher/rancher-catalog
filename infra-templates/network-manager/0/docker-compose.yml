@@ -1,0 +1,25 @@
+version: '2'
+services:
+  network-manager:
+    image: rancher/plugin-manager:v0.2.4
+    privileged: true
+    network_mode: host
+    pid: host
+    command: plugin-manager --metadata-url http://rancher-metadata/2016-07-29
+    dns: 169.254.169.250
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - /var/lib/docker:/var/lib/docker
+    - /lib/modules:/lib/modules:ro
+    - /run:/run:ro
+    - /var/run:/var/run:ro
+    - rancher-cni-driver:/etc/cni
+    - rancher-cni-driver:/opt/cni
+    labels:
+      io.rancher.scheduler.global: 'true'
+      io.rancher.container.dns: 'true'
+    logging:
+      driver: json-file
+      options:
+        max-size: 25m
+        max-file: '2'

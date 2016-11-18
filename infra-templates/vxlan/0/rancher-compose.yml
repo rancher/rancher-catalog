@@ -1,0 +1,33 @@
+.catalog:
+  name: "Rancher VXLAN"
+  version: "v0.0.1"
+
+vxlan:
+  network_driver:
+    name: Rancher VXLAN
+    default_network:
+      name: vxlan
+      host_ports: true
+      subnets:
+      - network_address: '10.42.0.0/16'
+      dns:
+      - 169.254.169.250
+      dns_search:
+      - rancher.internal
+    cni_config:
+      '10-rancher-vxlan.conf':
+        name: rancher-cni-network
+        type: rancher-bridge
+        bridge: docker0
+        bridgeSubnet: '10.42.0.0/16'
+        isDefaultGateway: true
+        hairpinMode": true
+        hostNat: true
+        hairpinMode: true
+        linkMTUOverhead: 98
+        ipam:
+          type: rancher-cni-ipam
+          logToFile: /var/log/rancher-ipam.log
+          routes:
+            - dst: 169.254.169.250/32
+

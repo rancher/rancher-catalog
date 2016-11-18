@@ -1,0 +1,30 @@
+version: '2'
+services:
+  dns:
+    image: rancher/dns:v0.10.6
+    network_mode: bridge
+    volumes:
+    - /var/tmp
+    command: router rancher-dns --metadata-server=169.254.169.250 --answers=/etc/rancher-dns/answers.json
+    labels:
+      io.rancher.scheduler.global: 'true'
+      io.rancher.container.dns: 'false'
+      io.rancher.sidekicks: dns-router
+    logging:
+      driver: json-file
+      options:
+        max-size: 25m
+        max-file: '2'
+  dns-router:
+    cap_add:
+    - NET_ADMIN
+    image: rancher/dns:v0.10.6
+    network_mode: host
+    volumes_from:
+    - dns
+    command: router
+    logging:
+      driver: json-file
+      options:
+        max-size: 25m
+        max-file: '2'

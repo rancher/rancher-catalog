@@ -1,0 +1,11 @@
+.catalog:
+    name: "Healthcheck Service"
+    version: "v0.1.0"
+    description: "Rancher healthcheck service"
+healthcheck:
+  health_check:
+      port: 42
+      interval: 2000
+      response_timeout: 2000
+      unhealthy_threshold: 3
+      healthy_threshold: 2
