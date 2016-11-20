@@ -1,5 +1,3 @@
 name: Mesos
 version: v0.28.0
 category: Orchestration
-labels:
-  io.rancher.certified: rancher
