@@ -3,14 +3,10 @@ description: Default Mesos template
 stacks:
   - name: mesos
     templateId: 'library:infra*mesos'
-  - name: dns
-    templateId: 'library:infra*dns'
-  - name: metadata
-    templateId: 'library:infra*metadata'
+  - name: network-services
+    templateId: 'library:infra*network-services'
   - name: ipsec
     templateId: 'library:infra*ipsec'
-  - name: network-manager
-    templateId: 'library:infra*network-manager'
   - name: scheduler
     templateId: 'library:infra*scheduler'
   - name: healthcheck
