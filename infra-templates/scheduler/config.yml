@@ -1,4 +1,4 @@
 name: Scheduler
 version: v0.1.0-dev
-category: Scheduling
+category: Framework
 description: A resource based scheduler plugin for Rancher.
