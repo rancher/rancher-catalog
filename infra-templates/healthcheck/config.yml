@@ -3,3 +3,5 @@ description: Rancher healthcheck service
 version: v0.1.0
 category: Framework
 projectURL: https://github.com/rancher/healthcheck
+labels:
+  io.rancher.certified: rancher
