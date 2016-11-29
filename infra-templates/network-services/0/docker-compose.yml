@@ -29,7 +29,7 @@ services:
   metadata:
     cap_add:
     - NET_ADMIN
-    image: rancher/metadata:v0.6.7
+    image: rancher/metadata:v0.6.8
     network_mode: bridge
     command: start.sh rancher-metadata -subscribe
     labels:
@@ -43,7 +43,7 @@ services:
         max-size: 25m
         max-file: '2'
   dns:
-    image: rancher/dns:v0.10.7
+    image: rancher/dns:v0.10.8
     network_mode: container:metadata
     command: rancher-dns --metadata-server=localhost --answers=/etc/rancher-dns/answers.json
     labels:
