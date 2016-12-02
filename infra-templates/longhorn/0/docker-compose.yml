@@ -1,0 +1,44 @@
+version: '2'
+services:
+  longhorn-driver:
+    privileged: true
+    pid: host
+    image: rancher/storage-longhorn:ac1ca3d7
+    labels:
+      io.rancher.scheduler.global: 'true'
+      io.rancher.container.create_agent: 'true'
+      io.rancher.container.agent.role: 'environment'
+    volumes:
+    - /run:/run
+    - /var/run:/var/run
+    - /dev:/host/dev
+    - /var/lib/rancher/volumes:/var/lib/rancher/volumes:shared
+    - /var/lib/rancher/longhorn:/var/lib/rancher/longhorn
+    environment:
+      RANCHER_DEBUG: ${RANCHER_DEBUG}
+    logging:
+      driver: json-file
+      options:
+        max-size: 25m
+        max-file: '2'
+
+  longhorn-orc:
+    image: rancher/longhorn-orc:3de5da27
+    labels:
+      io.rancher.sidekicks: longhorn-binary
+      io.rancher.scheduler.global: 'true'
+      io.rancher.container.create_agent: 'true'
+      io.rancher.container.agent.role: 'environment'
+    volumes:
+    - /var/run:/var/run
+    volumes_from:
+    - longhorn-binary   # /usr/local/bin
+    environment:
+      RANCHER_DEBUG: ${RANCHER_DEBUG}
+      LONGHORN_IMAGE: rancher/longhorn:bca578f
+
+  longhorn-binary:
+    image: rancher/longhorn:bca578f
+    command: [sh]
+    stdin_open: true
+    tty: true
