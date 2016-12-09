@@ -1,5 +1,5 @@
 name: Kubernetes
-version: v1.4.6-rancher2-1
+version: v1.4.6-rancher2-2
 category: Orchestration
 labels:
   io.rancher.certified: rancher
