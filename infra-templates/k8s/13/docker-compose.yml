@@ -13,11 +13,11 @@ kubelet:
         - --register-node=true
         - --cloud-provider=${CLOUD_PROVIDER}
         - --healthz-bind-address=0.0.0.0
-        - --cluster-dns=10.43.0.10
+        - --cluster-dns=169.254.169.250
         - --cluster-domain=cluster.local
         - --network-plugin=cni
         - --network-plugin-dir=/etc/cni/managed.d
-    image: rancher/k8s:v1.4.6-rancher2-3
+    image: rancher/k8s:v1.5.1-rancher1
     volumes:
         - /run:/run
         - /var/run:/var/run
@@ -43,7 +43,7 @@ proxy:
         - --master=http://kubernetes.kubernetes.rancher.internal
         - --v=2
         - --healthz-bind-address=0.0.0.0
-    image: rancher/k8s:v1.4.6-rancher2-3
+    image: rancher/k8s:v1.5.1-rancher1
     privileged: true
     net: host
     links:
@@ -96,7 +96,7 @@ kubernetes:
         - --runtime-config=batch/v2alpha1
     environment:
         KUBERNETES_URL: https://kubernetes.kubernetes.rancher.internal:6443
-    image: rancher/k8s:v1.4.6-rancher2-3
+    image: rancher/k8s:v1.5.1-rancher1
     links:
         - etcd
 
@@ -117,7 +117,7 @@ kubectld:
     environment:
         SERVER: http://kubernetes.kubernetes.rancher.internal
         LISTEN: ":8091"
-    image: rancher/kubectld:v0.4.1
+    image: rancher/kubectld:v0.4.0
     links:
         - kubernetes
 
@@ -126,7 +126,7 @@ scheduler:
         - kube-scheduler
         - --master=http://kubernetes.kubernetes.rancher.internal
         - --address=0.0.0.0
-    image: rancher/k8s:v1.4.6-rancher2-3
+    image: rancher/k8s:v1.5.1-rancher1
     labels:
         io.rancher.scheduler.affinity:host_label_soft: orchestration=true
     links:
@@ -141,7 +141,7 @@ controller-manager:
         - --kubeconfig=/etc/kubernetes/ssl/kubeconfig
         - --root-ca-file=/etc/kubernetes/ssl/ca.pem
         - --service-account-private-key-file=/etc/kubernetes/ssl/key.pem
-    image: rancher/k8s:v1.4.6-rancher2-3
+    image: rancher/k8s:v1.5.1-rancher1
     labels:
         io.rancher.scheduler.affinity:host_label_soft: orchestration=true
         io.rancher.container.create_agent: "true"
@@ -175,18 +175,5 @@ rancher-ingress-controller:
         - lb-controller
         - --controller=kubernetes
         - --provider=rancher
-    links:
-        - kubernetes
-
-addon-starter:
-    image: rancher/k8s:v1.4.6-rancher2-3
-    labels:
-        io.rancher.container.create_agent: 'true'
-        io.rancher.container.start_once: 'true'
-        io.rancher.container.agent.role: environmentAdmin
-    environment:
-        KUBERNETES_URL: https://kubernetes.kubernetes.rancher.internal:6443
-    command:
-        - addons-update.sh
     links:
         - kubernetes
