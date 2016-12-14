@@ -182,7 +182,6 @@ addon-starter:
     image: rancher/k8s:v1.5.0-rancher1
     labels:
         io.rancher.container.create_agent: 'true'
-        io.rancher.container.start_once: 'true'
         io.rancher.container.agent.role: environmentAdmin
     environment:
         KUBERNETES_URL: https://kubernetes.kubernetes.rancher.internal:6443
