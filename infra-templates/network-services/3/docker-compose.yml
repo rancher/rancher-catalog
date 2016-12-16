@@ -1,14 +1,14 @@
 version: '2'
 services:
   network-manager:
-    image: rancher/plugin-manager:v0.2.12
+    image: rancher/network-manager:v0.2.15
     privileged: true
     network_mode: host
     pid: host
     command: plugin-manager --metadata-url http://rancher-metadata/2016-07-29
     dns: 169.254.169.250
     environment:
-      DOCKER_BRIDGE: $DOCKER_BRIDGE
+      DOCKER_BRIDGE: docker0
       METADATA_IP: 169.254.169.250
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
