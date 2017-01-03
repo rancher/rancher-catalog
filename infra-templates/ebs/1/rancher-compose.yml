@@ -1,10 +1,9 @@
 .catalog:
-  name: "Rancher EFS"
-  version: "0.2.0"
+  name: "Rancher EBS"
+  version: "0.2.1"
   description: |
-    Docker volume plugin for EFS
+    Docker volume plugin for EBS
   minimum_rancher_version: "v1.1.999"
-  maximum_rancher_version: v1.1.999
   questions:
   - variable: AWS_ACCESS_KEY_ID
     label: AWS Access Key
@@ -22,8 +21,8 @@
     options:
     - true
     - false
-efs-driver:
+ebs-driver:
   storage_driver:
-    name: rancher-efs
+    name: rancher-ebs
     scope: environment
-    volume_access_mode: multiHostRW
+    volume_access_mode: singleHostRW

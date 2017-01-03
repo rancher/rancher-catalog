@@ -1,9 +1,8 @@
 .catalog:
   name: Kubernetes
-  version: v1.4.6-rancher1
+  version: v1.5.1-rancher1-7
   description: Rancher Kubernetes service
-  minimum_rancher_version: v1.2.0-pre4-rc1
-  maximum_rancher_version: v1.2.99
+  minimum_rancher_version: v1.3.0-rc1
   questions:
   - variable: EMBEDDED_BACKUPS
     label: Enable Backups

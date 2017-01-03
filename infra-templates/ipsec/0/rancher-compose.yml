@@ -8,6 +8,12 @@
       type: "string"
       default: "docker0"
       required: true
+    - variable: "SUBNET"
+      label: "Subnet"
+      description: "The subnet to use for the managed IPSEC network."
+      type: "string"
+      default: '10.42.0.0/16'
+      required: true
 
 ipsec:
   network_driver:
@@ -16,7 +22,7 @@ ipsec:
       name: ipsec
       host_ports: true
       subnets:
-      - network_address: '10.42.0.0/16'
+      - network_address: $SUBNET
       dns:
       - 169.254.169.250
       dns_search:
@@ -26,7 +32,7 @@ ipsec:
         name: rancher-cni-network
         type: rancher-bridge
         bridge: $DOCKER_BRIDGE
-        bridgeSubnet: '10.42.0.0/16'
+        bridgeSubnet: $SUBNET
         isDefaultGateway: true
         hostNat: true
         hairpinMode: true
