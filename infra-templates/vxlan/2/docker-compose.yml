@@ -27,7 +27,7 @@ services:
   cni-driver:
     privileged: true
     image: rancher/net:v0.8.2
-    command: sh -c "touch /var/log/rancher-ipam.log && exec tail ---disable-inotify -F /var/log/rancher-ipam.log"
+    command: sh -c "touch /var/log/rancher-cni.log && exec tail ---disable-inotify -F /var/log/rancher-cni.log"
     network_mode: host
     pid: host
     labels:

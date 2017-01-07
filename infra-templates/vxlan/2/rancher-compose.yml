@@ -45,6 +45,7 @@ vxlan:
         type: rancher-bridge
         bridge: $DOCKER_BRIDGE
         bridgeSubnet: $SUBNET
+        logToFile: /var/log/rancher-cni.log
         isDefaultGateway: true
         hairpinMode: true
         hostNat: true
@@ -53,6 +54,6 @@ vxlan:
         linkMTUOverhead: 50
         ipam:
           type: rancher-cni-ipam
-          logToFile: /var/log/rancher-ipam.log
+          logToFile: /var/log/rancher-cni.log
           routes:
             - dst: 169.254.169.250/32

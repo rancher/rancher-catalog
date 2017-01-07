@@ -45,6 +45,7 @@ ipsec:
         type: rancher-bridge
         bridge: $DOCKER_BRIDGE
         bridgeSubnet: $SUBNET
+        logToFile: /var/log/rancher-cni.log
         isDefaultGateway: true
         hostNat: true
         hairpinMode: true
@@ -52,6 +53,6 @@ ipsec:
         linkMTUOverhead: 98
         ipam:
           type: rancher-cni-ipam
-          logToFile: /var/log/rancher-ipam.log
+          logToFile: /var/log/rancher-cni.log
           routes:
           - dst: 169.254.169.250/32
