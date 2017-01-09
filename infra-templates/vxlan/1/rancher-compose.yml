@@ -14,6 +14,12 @@
       type: "string"
       default: '10.42.0.0/16'
       required: true
+    - variable: "RANCHER_DEBUG"
+      label: "Enable Debug Logs"
+      description: "This will enable very verbose debug logs."
+      type: "boolean"
+      default: "false"
+      required: true
 
 vxlan:
   network_driver:
