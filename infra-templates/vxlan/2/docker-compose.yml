@@ -11,7 +11,7 @@ services:
     ports:
       - 4789:4789/udp
     # Force cni-driver to start first
-    depends_on:
+    volumes_from:
       - cni-driver
     labels:
       io.rancher.sidekicks: cni-driver

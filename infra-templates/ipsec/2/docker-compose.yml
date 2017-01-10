@@ -9,7 +9,7 @@ services:
       - 500:500/udp
       - 4500:4500/udp
     # Force cni-driver to start first
-    depends_on:
+    volumes_from:
       - cni-driver
     labels:
       io.rancher.sidekicks: router,cni-driver
