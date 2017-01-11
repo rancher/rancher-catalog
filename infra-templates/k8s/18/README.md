@@ -1,4 +1,4 @@
-## Kubernetes 1.5.1
+## Kubernetes 1.5.2
 
 ### KubeDNS
 
