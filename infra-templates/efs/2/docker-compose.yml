@@ -3,7 +3,7 @@ services:
   efs-driver:
     privileged: true
     network_mode: host
-    image: rancher/storage-efs:v0.6.0
+    image: rancher/storage-efs:v0.6.1
     pid: host
     labels:
       io.rancher.scheduler.global: 'true'
