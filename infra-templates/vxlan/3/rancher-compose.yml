@@ -1,6 +1,6 @@
 .catalog:
   name: "Rancher VXLAN"
-  version: "v0.0.3"
+  version: "v0.0.4"
   questions:
     - variable: "DOCKER_BRIDGE"
       label: "Docker Bridge"
