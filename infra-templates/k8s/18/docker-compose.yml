@@ -118,7 +118,7 @@ kubectld:
     environment:
         SERVER: http://kubernetes.kubernetes.rancher.internal
         LISTEN: ":8091"
-    image: rancher/kubectld:v0.5.3
+    image: rancher/kubectld:v0.5.4
     links:
         - kubernetes
 
@@ -165,7 +165,7 @@ rancher-kubernetes-agent:
         - kubernetes
 
 rancher-ingress-controller:
-    image: rancher/lb-service-rancher:v0.5.5
+    image: rancher/lb-service-rancher:v0.5.6
     labels:
         io.rancher.scheduler.affinity:host_label_soft: orchestration=true
         io.rancher.container.create_agent: "true"
