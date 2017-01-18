@@ -31,6 +31,21 @@
     options:
      - rancher
      - aws
+  - variable: DISABLE_ADDONS
+    label: Disable rancher addons
+    description: Warning, Setting this to true will disable SkyDNS, dashboard, helm and other k8s services. This is meant for advanced users who want to implement their own DNS, UI and other addons.
+    required: true
+    default: false
+    type: enum
+    options:
+     - true
+     - false
+  - variable: POD_INFRA_CONTAINER_IMAGE
+    label: Pod Infra Container Image
+    description: The image whose network/ipc namespaces containers in each pod will use. (It uses kubelet default if left empty)
+    required: false
+    default: ""
+    type: string
 
 kubernetes:
     metadata:
