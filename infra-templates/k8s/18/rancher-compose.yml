@@ -44,7 +44,7 @@
     label: Pod Infra Container Image
     description: The image whose network/ipc namespaces containers in each pod will use. (It uses kubelet default if left empty)
     required: false
-    default: ""
+    default: "gcr.io/google_containers/pause-amd64:3.0"
     type: string
 
 kubernetes:
