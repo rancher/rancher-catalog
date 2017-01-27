@@ -46,6 +46,7 @@ vxlan:
         bridge: $DOCKER_BRIDGE
         bridgeSubnet: $SUBNET
         logToFile: /var/log/rancher-cni.log
+        isDebugLevel: ${RANCHER_DEBUG}
         isDefaultGateway: true
         hairpinMode: true
         hostNat: true
@@ -55,5 +56,6 @@ vxlan:
         ipam:
           type: rancher-cni-ipam
           logToFile: /var/log/rancher-cni.log
+          isDebugLevel: ${RANCHER_DEBUG}
           routes:
             - dst: 169.254.169.250/32
