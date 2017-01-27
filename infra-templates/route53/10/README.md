@@ -4,12 +4,10 @@ Rancher External DNS service powered by Amazon Route53
 
 #### Changelog
 
-##### v0.6.0
+##### v0.6.2
 
-* Reduces the overall rate of API requests to the DNS provider
-* Adds support for custom DNS naming convention
-* Stack, service and environment names used in service DNS names are now sanitized to conform with RFC 1123. Characters other than `a-z`, `A-Z`, `0-9` or `dash` are replaced by dashes.
-* For internal use the service creates TXT records to track the FQDNs it manages. These TXT records are named `external-dns-<environemntUUID>.<domain>` and should not be deleted.
+* Adds support for disabling/enforcing external DNS on the host and service level using labels
+* Fixes an issue with lingering TCP keep-alive connections to the Rancher Metadata service
 
 #### Usage
 
@@ -20,6 +18,23 @@ While upgrading from a version lower than v0.6.0 the TTL configuration value sho
 
 When running multiple instances of the External DNS service configured to use the same domain name, then only one of them can run in the "Default" environment of a Rancher server instance.
 
+##### Supported host labels
+
+`io.rancher.host.external_dns_ip`     
+Override the IP address used in DNS records for containers running on the host. Defaults to the IP address the host is registered with in Rancher.
+      
+`io.rancher.host.external_dns`    
+Accepts 'true' (default) or 'false'    
+When this is set to 'false' no DNS records will ever be created for containers running on this host.
+
+##### Supported service labels
+
+`io.rancher.service.external_dns`     
+Accepts 'always', 'never' or 'auto' (default)  
+- `always`: Always create DNS records for this service
+- `never`: Never create DNS records for this service
+- `auto`: Create DNS records for this service if it exposes ports on the host
+     
 ##### Custom DNS name template
 
 By default DNS entries are named `<service>.<stack>.<environment>.<domain>`.    
