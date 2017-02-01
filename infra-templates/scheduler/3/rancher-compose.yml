@@ -8,7 +8,7 @@
           label: "Enable Debug Logs"
           description: "This will enable very verbose debug logs."
           type: "boolean"
-          default: "true"
+          default: "false"
           required: true
 
 scheduler:
