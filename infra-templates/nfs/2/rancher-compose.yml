@@ -3,7 +3,7 @@
   version: "0.2.2"
   description: |
     Docker volume plugin for NFS
-  minimum_rancher_version: "v1.1.999"
+  minimum_rancher_version: v1.4.0-rc1
   questions:
   - variable: "NFS_SERVER"
     description: "IP or hostname of the NFS Server"
