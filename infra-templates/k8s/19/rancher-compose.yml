@@ -46,6 +46,12 @@
     required: false
     default: "gcr.io/google_containers/pause-amd64:3.0"
     type: string
+  - variable: REGISTRY
+    description: The registry to pull addon images from. This should be set to the private registry from which the images for helm, heapster, dashboard and dns (and other addon-services) should be pulled.
+    label: Registry
+    required: false
+    default: ""
+    type: string
   - variable: ETCD_HEARTBEAT_INTERVAL
     label: Etcd Heartbeat Interval
     description: Time (in milliseconds) of a heartbeat interval.
