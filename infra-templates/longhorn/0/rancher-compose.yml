@@ -1,0 +1,19 @@
+.catalog:
+  name: Longhorn
+  version: v0.1.0
+  description: Rancher Block Storage
+  questions:
+  - variable: RANCHER_DEBUG
+    label: Debug Mode
+    type: enum
+    description: Enable or disable verbose logging
+    default: false
+    options:
+    - true
+    - false
+
+longhorn-driver:
+  storage_driver:
+    name: rancher-longhorn
+    scope: environment
+    volume_access_mode: singleHostRW

@@ -1,0 +1,8 @@
+name: Longhorn
+description: |
+  Block storage built for, by, and on Rancher
+version: v0.1.0
+category: Storage
+labels:
+  io.rancher.certified: Experimental
+  io.rancher.orchestration.supported: 'cattle'
