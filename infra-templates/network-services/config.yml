@@ -1,5 +1,5 @@
 name: Network Services
-version: v0.0.11
+version: v0.0.13
 category: Framework
 labels:
   io.rancher.certified: rancher
