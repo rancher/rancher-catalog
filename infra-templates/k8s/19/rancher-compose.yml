@@ -2,8 +2,17 @@
   name: Kubernetes
   version: v1.5.2-rancher1-3
   description: Rancher Kubernetes service
-  minimum_rancher_version: v1.4.0-rc1
+  minimum_rancher_version: v1.5.0-rc1
   questions:
+  - variable: CONSTRAINT_TYPE
+    label: Plane Isolation
+    description: Isolate the data, orchestration and compute planes via host labels. Set to required when running in production.
+    required: true
+    default: best-effort
+    type: enum
+    options:
+    - best-effort
+    - required
   - variable: EMBEDDED_BACKUPS
     label: Enable Backups
     description: "Periodically backup state to /var/etcd/backups. Mount network storage here on all hosts before continuing"
