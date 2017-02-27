@@ -8,10 +8,10 @@
     label: Plane Isolation
     description: Isolate the data, orchestration and compute planes via host labels. Set to required when running in production.
     required: true
-    default: best-effort
+    default: none
     type: enum
     options:
-    - best-effort
+    - none
     - required
   - variable: EMBEDDED_BACKUPS
     label: Enable Backups
