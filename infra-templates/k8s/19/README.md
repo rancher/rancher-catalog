@@ -1,5 +1,13 @@
 ## Kubernetes 1.5.2
 
+### Upgrading to this Version
+
+If you are trying to create resiliency planes by labeling your hosts to separate out the data, orchestration and compute planes, you **must** change the plane isolation option to `required`. The host labels, `compute=true`, `orchestration=true` and `etcd=true`, are required on your hosts in order for Kubernetes to successfully launch. By default, `none` is selected and there will be not attempt for plane isolation.
+
+### Plane Isolation
+
+If you set the "Plane Isolation" field to `required`, the host labels, `compute=true`, `orchestration=true` and `etcd=true`, are required on your hosts in order for Kubernetes to successfully launch.
+
 ### KubeDNS
 
 KubeDNS is enabled for name resolution as described in the [Kubernetes DNS docs](http://kubernetes.io/docs/admin/dns/). The DNS service IP address is `10.43.0.10`.
@@ -18,10 +26,7 @@ The maximum number of backups stored on disk at any given moment follows the equ
 
 If backups are disabled, the values for `Backup Creation Period` and `Backup Retention Period` are ignored.
 
+
 ### Further Reading
 
 See [the wiki](https://github.com/rancher/rancher/wiki/Kubernetes-Management#deployment-types) for further information regarding usage of this template.
-
-### Upgrading to this Version: WARNING
-
-If you are upgrading from a previous version, rollback is not supported.
