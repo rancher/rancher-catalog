@@ -1,1 +1,1 @@
-Longhorn is Rancher's block storage technology for use with containers in production. [Read more about Longhorn.](https://github.com/rancher/longhorn)
+Longhorn is a micro-service block storage solution. [Read more about using Longhorn with Rancher.](https://github.com/rancher/longhorn/blob/master/docs/rancher.md)
