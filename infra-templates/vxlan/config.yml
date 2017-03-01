@@ -5,4 +5,4 @@ version: v0.0.5
 category: Networking
 labels:
   io.rancher.certified: rancher
-  io.rancher.orchestration.supported: 'cattle,mesos'
+  io.rancher.orchestration.supported: 'cattle,mesos,kubernetes'
