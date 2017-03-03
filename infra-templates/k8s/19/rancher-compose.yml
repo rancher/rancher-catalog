@@ -23,8 +23,8 @@
      - rancher
      - aws
   - variable: DISABLE_ADDONS
-    label: Disable rancher addons
-    description: Warning, Setting this to true will disable SkyDNS, dashboard, helm and other k8s services. This is meant for advanced users who want to implement their own DNS, UI and other addons.
+    label: Disable Rancher Add-ons
+    description: Warning - setting this to `true` will disable SkyDNS, dashboard, helm and other k8s services. This is meant for advanced users who want to implement their own DNS, UI and other addons.
     required: true
     default: false
     type: enum
@@ -39,7 +39,7 @@
     type: string
   - variable: REGISTRY
     description: The registry to pull addon images from. This should be set to the private registry from which the images for helm, heapster, dashboard and dns (and other addon-services) should be pulled.
-    label: Registry
+    label: Private Registry for Add-Ons
     required: false
     default: ""
     type: string
