@@ -17,11 +17,10 @@ Before a Rancher release is created, a PR will be made to bring all changes from
 When making changes to a template into an existing catalog, compare the current **dev** branch with the **master** branch to see if a new folder needs to be created.
 
 1. Check to see if a new folder needs to be created or not.
-
-  1. If there are no new folders, a new folder will need to be created. Create a base copy of the latest default.
-      1. Determine what the current default version of the catalog is. **IT IS NOT GUARANTEED TO BE THE LATEST FOLDER.** Go to the `config.yml` of the template to find the version number. Find the corresponding template folder that has this version.
-      2. Copy the folder and commit the change as `Base copy of folder X`
-  2. If there is a new folder in the **dev** branch, use the existing folder.
+      1. If there are no new folders, a new folder will need to be created. Create a base copy of the latest default.
+          1. Determine what the current default version of the catalog is. **IT IS NOT GUARANTEED TO BE THE LATEST FOLDER.** Go to the `config.yml` of the template to find the version number. Find the corresponding template folder that has this version.
+          2. Copy the folder and commit the change as `Base copy of folder X`
+      2. If there is a new folder in the **dev** branch, use the existing folder.
 
 2. Make changes to the template.
 
