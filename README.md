@@ -19,8 +19,8 @@ When making changes to a template into an existing catalog, compare the current 
 1. Check to see if a new folder is needed in the **dev** branch.
       1. If the folders are the same in the **dev** and **master** branch are the same, then a new folder will need to be created. 
           1. Create a base copy of the latest default.
-          3. Determine what the current default version of the catalog is. **IT IS NOT GUARANTEED TO BE THE LATEST FOLDER.** Go to the `config.yml` of the template to find the version number. Find the corresponding template folder that has this version.
-          24. Copy the folder and commit the change as `Base copy of folder X`
+          2. Determine what the current default version of the catalog is. **IT IS NOT GUARANTEED TO BE THE LATEST FOLDER.** Go to the `config.yml` of the template to find the version number. Find the corresponding template folder that has this version.
+          3. Copy the folder and commit the change as `Base copy of folder X`
       2. If there is already new folder in the **dev** branch that is not in the **master** branch, use the new folder in the **dev** branch.
 
 2. Make changes to the template.
