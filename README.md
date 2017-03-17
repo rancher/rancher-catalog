@@ -4,6 +4,8 @@ In Rancher, one of the two automatically packaged catalogs is this repository an
 
 ## Branches
 
+### Branches before a Release
+
 When developing and testing new templates, a new dev branch for the upcoming release is created and packaged in our `rancher/server:master` container. For example, when we are developing and testing for `v1.6.0`, a `v1.6.0-dev` branch is created. Any PRs with changes should be made to this **dev** branch.
 
 Each Rancher RC is packaged with a specific branch to isolate what specific versions of templates were tested. The RC branch are created from the current **dev** branch at the time of cutting the RC. If there are fixes that need to be made to address the templates, they should always be made to the **dev** branch. QA will pick up the **dev** branch for their RCs, if there are known issues in the specific branch packaged for the RC.
@@ -12,7 +14,13 @@ Each Rancher RC is packaged with a specific branch to isolate what specific vers
 
 Before an official Rancher release is created, a PR will be made to bring all changes from the **dev** branch to the **master** branch. The commits will be squashed into the 1 commit.
 
-## Versioning templates
+### Branches after a Release
+
+After the **dev** branch of a release has been merged to **master** and Rancher has been released, the first patch release will have  a branch created based on **master**. All following RCs for the patch release would be based on the previous RC until the patch release was completed. And then the cycle would start again. 
+
+> **Example:** Rancher releases v1.5.0. If Rancher is starting to test for Rancher v1.5.1, the first RC branch will be made from **master**, which would be **v1.5.1-rc1**. Any changes for the releases would be made into this branch. For the next RC, a new branch (i.e. **v1.5.1-rc2**) will be created from **v1.5.1-rc1**. This would continue until we release Rancher, where the last RC branch for the patch release would be merged into the **master** branch. While the v1.5.1 RCs are being created, there would be a **v1.6.0-dev** branch, which would contain changes for Rancher v1.6.0.  
+
+## Template Versions
 
 When making changes to a template into an existing catalog, compare the current **dev** branch with the **master** branch to see if a new folder needs to be created.
 
@@ -34,6 +42,11 @@ When making changes to a template into an existing catalog, compare the current 
 
 4. If the version will be the latest default in the upcoming release, update the version in the `config.yml`
 
+## Rancher Versions
+
+When creating new templates of a catalog, please review the `minimum_rancher_version:` in the `rancher-compose.yml` to confirm that it's accurate. Due to resourcing, Rancher is generally only able to test out 1 version of a infrastructure service for a release. Therefore, the new folder should have a `minimum_rancher_version` of the release that it is being introduced for. Also, any old templates should be reviewed and a `maximum_rancher_version` of the previous release should be used.
+
+> **Example:** We are working on Rancher v1.6 on the **v1.6.0-dev** branch. When introducing any new folders/versions templates, we should update the `minimum_rancher_version` to be `v1.6.0-rc1`. In any old folder, we should add in `maximum_rancher_version` and set it at `v1.5.99` to indicate those versions are only for the `v1.5.X` release. 
 
 ## Contact
 For bugs, questions, comments, corrections, suggestions, etc., open an issue in
