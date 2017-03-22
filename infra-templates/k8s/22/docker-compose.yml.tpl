@@ -72,19 +72,8 @@ etcd:
         ETCD_HEARTBEAT_INTERVAL: '${ETCD_HEARTBEAT_INTERVAL}'
         ETCD_ELECTION_TIMEOUT: '${ETCD_ELECTION_TIMEOUT}'
     volumes:
-    - etcd:/pdata
-    - /var/etcd/backups:/data-backup
-    volumes_from:
-    - data
-
-data:
-    image: busybox
-    entrypoint: /bin/true
-    net: none
-    volumes:
-    - /data
-    labels:
-        io.rancher.container.start_once: 'true'
+    - etcd:/pdata:z
+    - /var/etcd/backups:/data-backup:z
 
 kubernetes:
     labels:
