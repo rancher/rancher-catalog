@@ -63,7 +63,6 @@ etcd:
         io.rancher.scheduler.affinity:host_label: etcd=true
         {{- end }}
         io.rancher.scheduler.affinity:container_label_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
-        io.rancher.sidekicks: data
     environment:
         RANCHER_DEBUG: 'true'
         EMBEDDED_BACKUPS: '${EMBEDDED_BACKUPS}'
