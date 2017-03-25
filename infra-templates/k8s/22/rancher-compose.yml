@@ -132,7 +132,7 @@ controller-manager:
 
 kubectld:
     health_check:
-        port: 8091
+        port: 10240
         interval: 2000
         response_timeout: 2000
         unhealthy_threshold: 3
