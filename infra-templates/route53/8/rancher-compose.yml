@@ -1,8 +1,9 @@
 .catalog:
   name: "Route53 DNS"
   version: "v0.6.0-rancher1"
-  description: "Rancher External DNS service powered by Amazon Route53. Requires Rancher version v1.1.0"
+  description: "Rancher External DNS service powered by Amazon Route53."
   minimum_rancher_version: v1.1.0
+  maximum_rancher_version: v1.4.99
   questions:
     - variable: "AWS_ACCESS_KEY"
       label: "AWS Access Key ID"
@@ -48,7 +49,7 @@
     - variable: "HEALTH_CHECK"
       label: "Health Check Interval"
       description: |
-        The health check interval for this service, in milliseconds. 
+        The health check interval for this service, in milliseconds.
         Raise this value if the global requests for your account are exceeding the Route53 API rate limits.
       type: "int"
       min: 2000
