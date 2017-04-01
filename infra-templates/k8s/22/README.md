@@ -1,4 +1,4 @@
-## Kubernetes 1.5.4
+## Kubernetes 1.6.0
 
 ### Upgrading to this Version
 
