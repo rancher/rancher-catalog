@@ -84,7 +84,7 @@ kubernetes:
         io.rancher.sidekicks: kube-hostname-updater
     command:
         - kube-apiserver
-        - --storage-backend='etcd2'
+        - --storage-backend=etcd2
         - --service-cluster-ip-range=10.43.0.0/16
         - --etcd-servers=http://etcd.kubernetes.rancher.internal:2379
         - --insecure-bind-address=0.0.0.0
