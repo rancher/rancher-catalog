@@ -19,10 +19,10 @@ kubelet:
         - --cluster-domain=cluster.local
         - --network-plugin=cni
         - --network-plugin-dir=/etc/cni/managed.d
-        {{- if and (ne .Values.REGISTRY "") (ne .Values.POD_INFRA_CONTAINER_IMAGE "") }}
-        - --pod-infra-container-image=${REGISTRY}/${POD_INFRA_CONTAINER_IMAGE}
-        {{- else}}
+        {{- if or (eq .Values.REGISTRY "") (eq .Values.POD_INFRA_CONTAINER_IMAGE "") }}
         - --pod-infra-container-image=${POD_INFRA_CONTAINER_IMAGE}
+        {{- else}}
+        - --pod-infra-container-image=${REGISTRY}/${POD_INFRA_CONTAINER_IMAGE}
         {{- end }}
 
     image: rancher/k8s:v1.5.4-rancher1-3
