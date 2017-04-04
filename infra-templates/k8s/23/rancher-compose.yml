@@ -84,6 +84,8 @@ kubernetes:
         response_timeout: 2000
         unhealthy_threshold: 3
         healthy_threshold: 2
+        initializing_timeout: 60000
+        reinitializing_timeout: 60000
     retain_ip: true
 
 etcd:
@@ -99,6 +101,8 @@ etcd:
         response_timeout: 3000
         unhealthy_threshold: 3
         healthy_threshold: 2
+        initializing_timeout: 60000
+        reinitializing_timeout: 60000
         recreate_on_quorum_strategy_config:
             quorum: 2
         strategy: recreateOnQuorum
@@ -111,6 +115,8 @@ rancher-kubernetes-agent:
         response_timeout: 2000
         unhealthy_threshold: 3
         healthy_threshold: 2
+        initializing_timeout: 60000
+        reinitializing_timeout: 60000
 
 scheduler:
     health_check:
@@ -120,6 +126,8 @@ scheduler:
         response_timeout: 2000
         unhealthy_threshold: 3
         healthy_threshold: 2
+        initializing_timeout: 60000
+        reinitializing_timeout: 60000
 
 controller-manager:
     health_check:
@@ -129,6 +137,8 @@ controller-manager:
         response_timeout: 2000
         unhealthy_threshold: 3
         healthy_threshold: 2
+        initializing_timeout: 60000
+        reinitializing_timeout: 60000
 
 kubectld:
     health_check:
@@ -137,6 +147,8 @@ kubectld:
         response_timeout: 2000
         unhealthy_threshold: 3
         healthy_threshold: 2
+        initializing_timeout: 60000
+        reinitializing_timeout: 60000
 
 
 rancher-ingress-controller:
@@ -147,3 +159,5 @@ rancher-ingress-controller:
         response_timeout: 2000
         unhealthy_threshold: 3
         healthy_threshold: 2
+        initializing_timeout: 60000
+        reinitializing_timeout: 60000
