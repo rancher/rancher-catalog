@@ -1,9 +1,8 @@
 .catalog:
   name: Kubernetes
-  version: v1.5.4-rancher1
+  version: v1.5.4-rancher1-1
   description: Rancher Kubernetes service
   minimum_rancher_version: v1.5.0-rc1
-  maximum_rancher_version: v1.5.0-rc1
   questions:
   - variable: CONSTRAINT_TYPE
     label: Plane Isolation
@@ -32,17 +31,17 @@
     options:
      - true
      - false
+  - variable: REGISTRY
+    description: The registry to pull addon images and pod infra container image (optional). This should be set to the private registry from which the images for addon-services (i.e. helm, heapster, dashboard, dns) and the pod infra container image should be pulled.
+    label: Private Registry for Add-Ons and Pod Infra Container Image
+    required: false
+    default: ""
+    type: string
   - variable: POD_INFRA_CONTAINER_IMAGE
     label: Pod Infra Container Image
     description: The image whose network/ipc namespaces containers in each pod will use. (It uses kubelet default if left empty)
     required: false
     default: "gcr.io/google_containers/pause-amd64:3.0"
-    type: string
-  - variable: REGISTRY
-    description: The registry to pull addon images from. This should be set to the private registry from which the images for helm, heapster, dashboard and dns (and other addon-services) should be pulled.
-    label: Private Registry for Add-Ons
-    required: false
-    default: ""
     type: string
   - variable: EMBEDDED_BACKUPS
     label: Enable Backups
