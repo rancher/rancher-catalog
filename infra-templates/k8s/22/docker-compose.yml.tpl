@@ -18,7 +18,7 @@ kubelet:
         - --cluster-dns=10.43.0.10
         - --cluster-domain=cluster.local
         - --network-plugin=cni
-        - --network-plugin-dir=/etc/cni/managed.d
+        - --cni-conf-dir=/etc/cni/managed.d
         - --pod-infra-container-image=${POD_INFRA_CONTAINER_IMAGE}
     image: rancher/k8s:v1.6.0-rancher1-1
     volumes:
