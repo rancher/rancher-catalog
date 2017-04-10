@@ -194,6 +194,7 @@ rancher-ingress-controller:
     links:
         - kubernetes
 
+{{- if eq .Values.ENABLE_ADDONS "true" }}
 addon-starter:
     image: rancher/k8s:v1.6.1-rancher1-1
     labels:
@@ -204,9 +205,9 @@ addon-starter:
         io.rancher.container.agent.role: environmentAdmin
     environment:
         KUBERNETES_URL: https://kubernetes.kubernetes.rancher.internal:6443
-        DISABLE_ADDONS: ${DISABLE_ADDONS}
         REGISTRY: ${REGISTRY}
     command:
         - addons-update.sh
     links:
         - kubernetes
+{{- end }}
