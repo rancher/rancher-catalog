@@ -28,11 +28,11 @@
     required: false
     default: ""
     type: string
-  - variable: DISABLE_ADDONS
-    label: Disable Rancher Add-ons
-    description: Setting this to `true` will disable SkyDNS, dashboard, helm and other k8s services. This is meant for advanced users who want to implement their own DNS, UI and other add-ons.
+  - variable: ENABLE_ADDONS
+    label: Enable Kubernetes Add-ons
+    description: Setting this to `false` will disable Dashboard, Helm, SkyDNS, and other Kubernetes add-on services. This is meant for advanced users who want to deploy custom versions of these add-ons.
     required: true
-    default: false
+    default: true
     type: enum
     options:
      - true
