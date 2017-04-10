@@ -15,10 +15,12 @@ services:
       io.rancher.sidekicks: router,cni-driver
       io.rancher.scheduler.global: 'true'
       io.rancher.cni.link_mtu_overhead: '0'
+      io.rancher.network.macsync: 'true'
+      io.rancher.network.arpsync: 'true'
   router:
     cap_add:
       - NET_ADMIN
-    image: rancher/net:v0.10.0
+    image: rancher/net:v0.11.2
     network_mode: container:ipsec
     environment:
       RANCHER_DEBUG: '${RANCHER_DEBUG}'
@@ -32,7 +34,7 @@ services:
         max-file: '2'
   cni-driver:
     privileged: true
-    image: rancher/net:v0.10.0
+    image: rancher/net:v0.11.2
     command: sh -c "touch /var/log/rancher-cni.log && exec tail ---disable-inotify -F /var/log/rancher-cni.log"
     network_mode: host
     pid: host
