@@ -1,9 +1,8 @@
 .catalog:
   name: Kubernetes
-  version: v1.5.2-rancher1-3
+  version: v1.5.4-rancher1-1
   description: Rancher Kubernetes service
   minimum_rancher_version: v1.5.0-rc1
-  maximum_rancher_version: v1.5.0-rc1
   questions:
   - variable: CONSTRAINT_TYPE
     label: Plane Isolation
@@ -23,9 +22,15 @@
     options:
      - rancher
      - aws
+  - variable: REGISTRY
+    description: The registry to pull addon images and the optional pod infra container image. This should be set to the private registry from which the images for addon-services (i.e. helm, heapster, dashboard, dns) and the pod infra container image should be pulled.
+    label: Private Registry for Add-Ons and Pod Infra Container Image
+    required: false
+    default: ""
+    type: string
   - variable: DISABLE_ADDONS
     label: Disable Rancher Add-ons
-    description: Warning - setting this to `true` will disable SkyDNS, dashboard, helm and other k8s services. This is meant for advanced users who want to implement their own DNS, UI and other addons.
+    description: Setting this to `true` will disable SkyDNS, dashboard, helm and other k8s services. This is meant for advanced users who want to implement their own DNS, UI and other add-ons.
     required: true
     default: false
     type: enum
@@ -34,15 +39,9 @@
      - false
   - variable: POD_INFRA_CONTAINER_IMAGE
     label: Pod Infra Container Image
-    description: The image whose network/ipc namespaces containers in each pod will use. (It uses kubelet default if left empty)
+    description: The image whose network/ipc namespaces containers in each pod will use. It uses kubelet default if left empty. Do not add the private registry to this field, update the `Private Registry for Add-Ons and Pod Infra Container Image` field with the registry information.
     required: false
     default: "gcr.io/google_containers/pause-amd64:3.0"
-    type: string
-  - variable: REGISTRY
-    description: The registry to pull addon images from. This should be set to the private registry from which the images for helm, heapster, dashboard and dns (and other addon-services) should be pulled.
-    label: Private Registry for Add-Ons
-    required: false
-    default: ""
     type: string
   - variable: EMBEDDED_BACKUPS
     label: Enable Backups
@@ -85,6 +84,8 @@ kubernetes:
         response_timeout: 2000
         unhealthy_threshold: 3
         healthy_threshold: 2
+        initializing_timeout: 60000
+        reinitializing_timeout: 60000
     retain_ip: true
 
 etcd:
@@ -100,6 +101,8 @@ etcd:
         response_timeout: 3000
         unhealthy_threshold: 3
         healthy_threshold: 2
+        initializing_timeout: 60000
+        reinitializing_timeout: 60000
         recreate_on_quorum_strategy_config:
             quorum: 2
         strategy: recreateOnQuorum
@@ -112,6 +115,8 @@ rancher-kubernetes-agent:
         response_timeout: 2000
         unhealthy_threshold: 3
         healthy_threshold: 2
+        initializing_timeout: 60000
+        reinitializing_timeout: 60000
 
 scheduler:
     health_check:
@@ -121,6 +126,8 @@ scheduler:
         response_timeout: 2000
         unhealthy_threshold: 3
         healthy_threshold: 2
+        initializing_timeout: 60000
+        reinitializing_timeout: 60000
 
 controller-manager:
     health_check:
@@ -130,6 +137,8 @@ controller-manager:
         response_timeout: 2000
         unhealthy_threshold: 3
         healthy_threshold: 2
+        initializing_timeout: 60000
+        reinitializing_timeout: 60000
 
 kubectld:
     health_check:
@@ -138,6 +147,8 @@ kubectld:
         response_timeout: 2000
         unhealthy_threshold: 3
         healthy_threshold: 2
+        initializing_timeout: 60000
+        reinitializing_timeout: 60000
 
 
 rancher-ingress-controller:
@@ -148,3 +159,5 @@ rancher-ingress-controller:
         response_timeout: 2000
         unhealthy_threshold: 3
         healthy_threshold: 2
+        initializing_timeout: 60000
+        reinitializing_timeout: 60000
