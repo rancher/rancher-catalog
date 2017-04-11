@@ -42,6 +42,51 @@ kubelet:
     links:
         - kubernetes
 
+{{- if eq .Values.CONSTRAINT_TYPE "required" }}
+kubelet-unschedulable:
+    labels:
+        io.rancher.container.dns: "true"
+        io.rancher.container.create_agent: "true"
+        io.rancher.container.agent.role: environmentAdmin
+        io.rancher.scheduler.global: "true"
+        io.rancher.scheduler.affinity:host_label_ne: compute=true
+    command:
+        - kubelet
+        - --kubeconfig=/etc/kubernetes/ssl/kubeconfig
+        - --api_servers=https://kubernetes.kubernetes.rancher.internal:6443
+        - --allow-privileged=true
+        - --register-node=true
+        - --cloud-provider=${CLOUD_PROVIDER}
+        - --healthz-bind-address=0.0.0.0
+        - --cluster-dns=10.43.0.10
+        - --cluster-domain=cluster.local
+        - --network-plugin=cni
+        - --cni-conf-dir=/etc/cni/managed.d
+        {{- if and (ne .Values.REGISTRY "") (ne .Values.POD_INFRA_CONTAINER_IMAGE "") }}
+        - --pod-infra-container-image=${REGISTRY}/${POD_INFRA_CONTAINER_IMAGE}
+        {{- else if (ne .Values.POD_INFRA_CONTAINER_IMAGE "") }}
+        - --pod-infra-container-image=${POD_INFRA_CONTAINER_IMAGE}
+        {{- end }}
+        - --register-schedulable=false
+    image: rancher/k8s:v1.6.1-rancher1-1
+    volumes:
+        - /run:/run
+        - /var/run:/var/run
+        - /sys:/sys:ro
+        - /var/lib/docker:/var/lib/docker
+        - /var/lib/kubelet:/var/lib/kubelet:shared
+        - /var/log/containers:/var/log/containers
+        - rancher-cni-driver:/etc/cni:ro
+        - rancher-cni-driver:/opt/cni:ro
+        - /dev:/host/dev
+    net: host
+    pid: host
+    ipc: host
+    privileged: true
+    links:
+        - kubernetes
+{{- end }}
+
 proxy:
     labels:
         io.rancher.container.dns: "true"
