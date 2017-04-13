@@ -1,9 +1,9 @@
 .catalog:
   name: Kubernetes
-  version: v1.5.2-rancher1-4
+  version: v1.5.2-rancher1-5
   description: Rancher Kubernetes service
   minimum_rancher_version: v1.4.0-rc1
-  maximum_rancher_version: v1.4.0-rc1
+  maximum_rancher_version: v1.4.99
   questions:
   - variable: CLOUD_PROVIDER
     label: Cloud Provider
@@ -25,8 +25,8 @@
      - false
   - variable: POD_INFRA_CONTAINER_IMAGE
     label: Pod Infra Container Image
-    description: The image whose network/ipc namespaces containers in each pod will use. If your images are being pulled from a private registry, you need to add this image to your private registry and put the private registry into this field.
-    required: true
+    description: The image whose network/ipc namespaces containers in each pod will use. (It uses kubelet default if left empty)
+    required: false
     default: "gcr.io/google_containers/pause-amd64:3.0"
     type: string
   - variable: REGISTRY_ADDONS
@@ -53,6 +53,18 @@
     required: true
     default: 24h
     type: string
+  - variable: ETCD_HEARTBEAT_INTERVAL
+    label: Etcd Heartbeat Interval
+    description: Time (in milliseconds) of a heartbeat interval.
+    required: true
+    default: 500
+    type: int
+  - variable: ETCD_ELECTION_TIMEOUT
+    label: Etcd Election Timeout
+    description: Time (in milliseconds) for an election to timeout.
+    required: true
+    default: 5000
+    type: int
 
 kubernetes:
     metadata:
@@ -65,6 +77,8 @@ kubernetes:
         response_timeout: 2000
         unhealthy_threshold: 3
         healthy_threshold: 2
+        initializing_timeout: 60000
+        reinitializing_timeout: 60000
     retain_ip: true
 
 etcd:
@@ -80,6 +94,8 @@ etcd:
         response_timeout: 3000
         unhealthy_threshold: 3
         healthy_threshold: 2
+        initializing_timeout: 60000
+        reinitializing_timeout: 60000
         recreate_on_quorum_strategy_config:
             quorum: 2
         strategy: recreateOnQuorum
@@ -92,6 +108,8 @@ rancher-kubernetes-agent:
         response_timeout: 2000
         unhealthy_threshold: 3
         healthy_threshold: 2
+        initializing_timeout: 60000
+        reinitializing_timeout: 60000
 
 scheduler:
     health_check:
@@ -101,6 +119,8 @@ scheduler:
         response_timeout: 2000
         unhealthy_threshold: 3
         healthy_threshold: 2
+        initializing_timeout: 60000
+        reinitializing_timeout: 60000
 
 controller-manager:
     health_check:
@@ -110,6 +130,8 @@ controller-manager:
         response_timeout: 2000
         unhealthy_threshold: 3
         healthy_threshold: 2
+        initializing_timeout: 60000
+        reinitializing_timeout: 60000
 
 kubectld:
     health_check:
@@ -118,6 +140,8 @@ kubectld:
         response_timeout: 2000
         unhealthy_threshold: 3
         healthy_threshold: 2
+        initializing_timeout: 60000
+        reinitializing_timeout: 60000
 
 
 rancher-ingress-controller:
@@ -128,3 +152,5 @@ rancher-ingress-controller:
         response_timeout: 2000
         unhealthy_threshold: 3
         healthy_threshold: 2
+        initializing_timeout: 60000
+        reinitializing_timeout: 60000
