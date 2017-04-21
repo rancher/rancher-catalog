@@ -11,7 +11,7 @@ portworx:
   privileged: true
   environment:
     CLUSTER_ID: ${CLUSTER_ID}
-    KVDB: ${KDDB}
+    KVDB: ${KVDB}
     HDR_DIR: ${HEADER_DIR}
     USE_DISKS: ${USE_DISKS}
   volumes:
