@@ -1,6 +1,6 @@
 .catalog:
   name: Kubernetes
-  version: v1.6.1-rancher1-1
+  version: v1.5.4-rancher1-3
   description: Rancher Kubernetes service
   minimum_rancher_version: v1.6.0-alpha1
   questions:
@@ -101,8 +101,8 @@ etcd:
         response_timeout: 3000
         unhealthy_threshold: 3
         healthy_threshold: 2
-        initializing_timeout: 60000
-        reinitializing_timeout: 60000
+        initializing_timeout: 120000
+        reinitializing_timeout: 120000
         recreate_on_quorum_strategy_config:
             quorum: 2
         strategy: recreateOnQuorum
