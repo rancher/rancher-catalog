@@ -1,10 +1,9 @@
 .catalog:
   name: "Rancher NFS"
-  version: "0.2.2"
+  version: "0.3.0"
   description: |
     Docker volume plugin for NFS
-  minimum_rancher_version: v1.4.0-rc1
-  maximum_rancher_version: v1.5.99
+  minimum_rancher_version: v1.6.0-rc1
   questions:
   - variable: "NFS_SERVER"
     description: "IP or hostname of the NFS Server"
