@@ -68,7 +68,7 @@ kubelet-unschedulable:
         - --pod-infra-container-image=${POD_INFRA_CONTAINER_IMAGE}
         {{- end }}
         - --register-schedulable=false
-    image: rancher/k8s:v1.6.1-rancher1-1
+    image: rancher/k8s:v1.5.4-rancher1-3
     volumes:
         - /run:/run
         - /var/run:/var/run
