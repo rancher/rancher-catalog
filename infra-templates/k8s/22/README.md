@@ -10,6 +10,10 @@ If you are trying to create resiliency planes by labeling your hosts to separate
 
 If you set the "Plane Isolation" field to `required`, the host labels, `compute=true`, `orchestration=true` and `etcd=true`, are required on your hosts in order for Kubernetes to successfully launch.
 
+#### Upgrading Kubernetes and Requiring Plane Isolation
+
+If you choose `required` for plane isolation and have a previous installation of Kubernetes, your `etcd=true` labels **must** be on the hosts that have the etcd service running on it.
+
 ### KubeDNS
 
 KubeDNS is enabled for name resolution as described in the [Kubernetes DNS docs](http://kubernetes.io/docs/admin/dns/). The DNS service IP address is `10.43.0.10`.

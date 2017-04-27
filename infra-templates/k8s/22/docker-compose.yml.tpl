@@ -24,7 +24,7 @@ kubelet:
         {{- else if (ne .Values.POD_INFRA_CONTAINER_IMAGE "") }}
         - --pod-infra-container-image=${POD_INFRA_CONTAINER_IMAGE}
         {{- end }}
-    image: rancher/k8s:v1.5.4-rancher1-3
+    image: rancher/k8s:v1.5.4-rancher1-4
     volumes:
         - /run:/run
         - /var/run:/var/run
@@ -99,7 +99,7 @@ proxy:
         - --master=http://kubernetes.kubernetes.rancher.internal
         - --v=2
         - --healthz-bind-address=0.0.0.0
-    image: rancher/k8s:v1.5.4-rancher1-3
+    image: rancher/k8s:v1.5.4-rancher1-4
     privileged: true
     net: host
     links:
@@ -147,7 +147,7 @@ kubernetes:
         - --runtime-config=batch/v2alpha1
     environment:
         KUBERNETES_URL: https://kubernetes.kubernetes.rancher.internal:6443
-    image: rancher/k8s:v1.5.4-rancher1-3
+    image: rancher/k8s:v1.5.4-rancher1-4
     links:
         - etcd
 
@@ -179,7 +179,7 @@ scheduler:
         - kube-scheduler
         - --master=http://kubernetes.kubernetes.rancher.internal
         - --address=0.0.0.0
-    image: rancher/k8s:v1.5.4-rancher1-3
+    image: rancher/k8s:v1.5.4-rancher1-4
     {{- if eq .Values.CONSTRAINT_TYPE "required" }}
     labels:
         io.rancher.scheduler.affinity:host_label: orchestration=true
@@ -196,7 +196,7 @@ controller-manager:
         - --kubeconfig=/etc/kubernetes/ssl/kubeconfig
         - --root-ca-file=/etc/kubernetes/ssl/ca.pem
         - --service-account-private-key-file=/etc/kubernetes/ssl/key.pem
-    image: rancher/k8s:v1.5.4-rancher1-3
+    image: rancher/k8s:v1.5.4-rancher1-4
     labels:
         {{- if eq .Values.CONSTRAINT_TYPE "required" }}
         io.rancher.scheduler.affinity:host_label: orchestration=true
@@ -241,7 +241,7 @@ rancher-ingress-controller:
 
 {{- if eq .Values.ENABLE_ADDONS "true" }}
 addon-starter:
-    image: rancher/k8s:v1.5.4-rancher1-3
+    image: rancher/k8s:v1.5.4-rancher1-4
     labels:
         {{- if eq .Values.CONSTRAINT_TYPE "required" }}
         io.rancher.scheduler.affinity:host_label: orchestration=true
@@ -251,6 +251,7 @@ addon-starter:
     environment:
         KUBERNETES_URL: https://kubernetes.kubernetes.rancher.internal:6443
         REGISTRY: ${REGISTRY}
+        INFLUXDB_HOST_PATH: ${INFLUXDB_HOST_PATH}
     command:
         - addons-update.sh
     links:
