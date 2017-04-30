@@ -36,6 +36,7 @@ services:
       net.ipv4.conf.all.send_redirects: '0'
       net.ipv4.conf.default.send_redirects: '0'
       net.ipv4.conf.eth0.send_redirects: '0'
+      net.ipv4.xfrm4_gc_thresh: '2147483647'
   cni-driver:
     privileged: true
     image: rancher/net:v0.11.2
