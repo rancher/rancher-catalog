@@ -1,6 +1,6 @@
 .catalog:
   name: Kubernetes
-  version: v1.5.4-rancher1-3
+  version: v1.5.4-rancher1-4.1
   description: Rancher Kubernetes service
   minimum_rancher_version: v1.6.0-alpha1
   questions:
@@ -42,6 +42,11 @@
     description: The image whose network/ipc namespaces containers in each pod will use. It uses kubelet default if left empty. Do not add the private registry to this field, update the `Private Registry for Add-Ons and Pod Infra Container Image` field with the registry information.
     required: false
     default: "gcr.io/google_containers/pause-amd64:3.0"
+    type: string
+  - variable: INFLUXDB_HOST_PATH
+    label: InfluxDB Host Path
+    description: "Write Heapster metrics to an absolute path on the host. This may be network-attached storage."
+    required: false
     type: string
   - variable: EMBEDDED_BACKUPS
     label: Enable Backups
