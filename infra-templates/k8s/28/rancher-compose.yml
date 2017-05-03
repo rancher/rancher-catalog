@@ -1,8 +1,8 @@
 .catalog:
   name: Kubernetes
-  version: v1.5.4-rancher1-4
+  version: v1.6.2-rancher2-1
   description: Rancher Kubernetes service
-  minimum_rancher_version: v1.5.0-rc1
+  minimum_rancher_version: v1.6.0-alpha1
   questions:
   - variable: CONSTRAINT_TYPE
     label: Plane Isolation
@@ -28,11 +28,11 @@
     required: false
     default: ""
     type: string
-  - variable: DISABLE_ADDONS
-    label: Disable Rancher Add-ons
-    description: Setting this to `true` will disable SkyDNS, dashboard, helm and other k8s services. This is meant for advanced users who want to implement their own DNS, UI and other add-ons.
+  - variable: ENABLE_ADDONS
+    label: Enable Kubernetes Add-ons
+    description: Setting this to `false` will disable Dashboard, Helm, SkyDNS, and other Kubernetes add-on services. This is meant for advanced users who want to deploy custom versions of these add-ons.
     required: true
-    default: false
+    default: true
     type: enum
     options:
      - true
@@ -147,7 +147,7 @@ controller-manager:
 
 kubectld:
     health_check:
-        port: 8091
+        port: 10240
         interval: 2000
         response_timeout: 2000
         unhealthy_threshold: 3
