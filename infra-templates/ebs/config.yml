@@ -4,5 +4,5 @@ description: |
 version: 0.3.0
 category: Storage
 labels:
-  io.rancher.certified: Experimental
+  io.rancher.certified: rancher
   io.rancher.orchestration.supported: 'cattle,mesos,swarm'
