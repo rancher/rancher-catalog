@@ -24,7 +24,7 @@ kubelet:
         {{- else if (ne .Values.POD_INFRA_CONTAINER_IMAGE "") }}
         - --pod-infra-container-image=${POD_INFRA_CONTAINER_IMAGE}
         {{- end }}
-    image: rancher/k8s:v1.6.2-rancher3-2
+    image: rancher/k8s:v1.6.2-rancher3-3
     volumes:
         - /run:/run
         - /var/run:/var/run
@@ -68,7 +68,7 @@ kubelet-unschedulable:
         - --pod-infra-container-image=${POD_INFRA_CONTAINER_IMAGE}
         {{- end }}
         - --register-schedulable=false
-    image: rancher/k8s:v1.6.2-rancher3-2
+    image: rancher/k8s:v1.6.2-rancher3-3
     volumes:
         - /run:/run
         - /var/run:/var/run
@@ -99,7 +99,7 @@ proxy:
         - --master=http://kubernetes.kubernetes.rancher.internal
         - --v=2
         - --healthz-bind-address=0.0.0.0
-    image: rancher/k8s:v1.6.2-rancher3-2
+    image: rancher/k8s:v1.6.2-rancher3-3
     privileged: true
     net: host
     links:
@@ -153,7 +153,7 @@ kubernetes:
         {{- end }}
     environment:
         KUBERNETES_URL: https://kubernetes.kubernetes.rancher.internal:6443
-    image: rancher/k8s:v1.6.2-rancher3-2
+    image: rancher/k8s:v1.6.2-rancher3-3
     links:
         - etcd
         - rancher-kubernetes-auth
@@ -186,7 +186,7 @@ scheduler:
         - kube-scheduler
         - --master=http://kubernetes.kubernetes.rancher.internal
         - --address=0.0.0.0
-    image: rancher/k8s:v1.6.2-rancher3-2
+    image: rancher/k8s:v1.6.2-rancher3-3
     {{- if eq .Values.CONSTRAINT_TYPE "required" }}
     labels:
         io.rancher.scheduler.affinity:host_label: orchestration=true
@@ -203,7 +203,7 @@ controller-manager:
         - --kubeconfig=/etc/kubernetes/ssl/kubeconfig
         - --root-ca-file=/etc/kubernetes/ssl/ca.pem
         - --service-account-private-key-file=/etc/kubernetes/ssl/key.pem
-    image: rancher/k8s:v1.6.2-rancher3-2
+    image: rancher/k8s:v1.6.2-rancher3-3
     labels:
         {{- if eq .Values.CONSTRAINT_TYPE "required" }}
         io.rancher.scheduler.affinity:host_label: orchestration=true
@@ -257,7 +257,7 @@ rancher-kubernetes-auth:
 
 {{- if eq .Values.ENABLE_ADDONS "true" }}
 addon-starter:
-    image: rancher/k8s:v1.6.2-rancher3-2
+    image: rancher/k8s:v1.6.2-rancher3-3
     labels:
         {{- if eq .Values.CONSTRAINT_TYPE "required" }}
         io.rancher.scheduler.affinity:host_label: orchestration=true
