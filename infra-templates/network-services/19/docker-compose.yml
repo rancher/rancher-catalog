@@ -42,7 +42,7 @@ services:
         max-size: 25m
         max-file: '2'
   dns:
-    image: rancher/dns:v0.15.0
+    image: rancher/dns:v0.15.1
     network_mode: container:metadata
     command: rancher-dns --metadata-server=localhost --answers=/etc/rancher-dns/answers.json --recurser-timeout ${DNS_RECURSER_TIMEOUT}
     labels:
