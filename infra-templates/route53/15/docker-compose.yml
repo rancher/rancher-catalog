@@ -1,6 +1,6 @@
 # notemplating
 route53:
-  image: rancher/external-dns:v0.6.4
+  image: rancher/external-dns:v0.7.0
   command: -provider=route53
   expose:
     - 1000
