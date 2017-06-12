@@ -4,12 +4,9 @@ Rancher External DNS service powered by Amazon Route53
 
 #### Changelog
 
-##### v0.6.4
+##### v0.7.0
 
-* Support for Rancher server instances with self-signed certs (using `/var/lib/rancher/etc/ssl/ca.crt` from the host)
-* Support for EC2 IAM role credentials for authenticating to Route 53 API
-* Support for using service specific name template with label `io.rancher.service.external_dns_name_template`
-* Depricated AWS Region setting (Route 53 API is not regionalized)
+* Fix an issue for Cattle FQDN updates with custom name templates
 
 #### Usage
 
