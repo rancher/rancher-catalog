@@ -1,6 +1,6 @@
 .catalog:
   name: "Rancher VXLAN"
-  version: "v0.1.0"
+  version: "v0.1.1"
   minimum_rancher_version: v1.6.0-alpha1
   questions:
     - variable: "DOCKER_BRIDGE"
@@ -26,4 +26,16 @@
       description: "This will enable very verbose debug logs."
       type: "boolean"
       default: "false"
+      required: true
+    - variable: "RANCHER_HAIRPIN_MODE"
+      label: "Enable Hairpin mode"
+      description: "If this is enabled, Promiscuous mode needs to be disabled."
+      type: "boolean"
+      default: "false"
+      required: true
+    - variable: "RANCHER_PROMISCUOUS_MODE"
+      label: "Enable Promiscuous mode on the bridge"
+      description: "If this is enabled, Hairpin mode needs to be disabled."
+      type: "boolean"
+      default: "true"
       required: true

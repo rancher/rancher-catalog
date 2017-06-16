@@ -3,16 +3,13 @@ services:
   vxlan:
     cap_add:
       - NET_ADMIN
-    image: rancher/net:v0.11.2
+    image: rancher/net:v0.11.3
     network_mode: vxlan
     environment:
       RANCHER_DEBUG: '${RANCHER_DEBUG}'
     command: start-vxlan.sh
     ports:
       - 4789:4789/udp
-    # Force cni-driver to start first
-    volumes_from:
-      - cni-driver
     labels:
       io.rancher.sidekicks: cni-driver
       io.rancher.scheduler.global: 'true'
@@ -50,7 +47,8 @@ services:
           isDefaultGateway: true
           hairpinMode: true
           hostNat: true
-          hairpinMode: true
+          hairpinMode: {{  .Values.RANCHER_HAIRPIN_MODE }}
+          promiscMode: {{ .Values.RANCHER_PROMISCUOUS_MODE }}
           mtu: ${MTU}
           linkMTUOverhead: 50
           ipam:
@@ -61,7 +59,7 @@ services:
               - dst: 169.254.169.250/32
   cni-driver:
     privileged: true
-    image: rancher/net:v0.11.2
+    image: rancher/net:v0.11.3
     command: sh -c "touch /var/log/rancher-cni.log && exec tail ---disable-inotify -F /var/log/rancher-cni.log"
     network_mode: host
     pid: host
