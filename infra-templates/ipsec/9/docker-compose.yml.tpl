@@ -8,9 +8,6 @@ services:
     ports:
       - 500:500/udp
       - 4500:4500/udp
-    # Force cni-driver to start first
-    volumes_from:
-      - cni-driver
     labels:
       io.rancher.sidekicks: router,cni-driver
       io.rancher.scheduler.global: 'true'
@@ -38,7 +35,8 @@ services:
           isDebugLevel: ${RANCHER_DEBUG}
           isDefaultGateway: true
           hostNat: true
-          hairpinMode: true
+          hairpinMode: {{  .Values.RANCHER_HAIRPIN_MODE }}
+          promiscMode: {{ .Values.RANCHER_PROMISCUOUS_MODE }}
           mtu: ${MTU}
           linkMTUOverhead: 98
           ipam:
@@ -50,7 +48,7 @@ services:
   router:
     cap_add:
       - NET_ADMIN
-    image: rancher/net:v0.11.2
+    image: rancher/net:v0.11.3
     network_mode: container:ipsec
     environment:
       RANCHER_DEBUG: '${RANCHER_DEBUG}'
@@ -69,7 +67,7 @@ services:
       net.ipv4.xfrm4_gc_thresh: '2147483647'
   cni-driver:
     privileged: true
-    image: rancher/net:v0.11.2
+    image: rancher/net:v0.11.3
     command: sh -c "touch /var/log/rancher-cni.log && exec tail ---disable-inotify -F /var/log/rancher-cni.log"
     network_mode: host
     pid: host
