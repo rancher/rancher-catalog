@@ -28,6 +28,37 @@ services:
       options:
         max-size: 25m
         max-file: '2'
+    network_driver:
+      name: Rancher VXLAN
+      default_network:
+        name: vxlan
+        host_ports: true
+        subnets:
+        - network_address: $SUBNET
+        dns:
+        - 169.254.169.250
+        dns_search:
+        - rancher.internal
+      cni_config:
+        '10-rancher-vxlan.conf':
+          name: rancher-cni-network
+          type: rancher-bridge
+          bridge: $DOCKER_BRIDGE
+          bridgeSubnet: $SUBNET
+          logToFile: /var/log/rancher-cni.log
+          isDebugLevel: ${RANCHER_DEBUG}
+          isDefaultGateway: true
+          hairpinMode: true
+          hostNat: true
+          hairpinMode: true
+          mtu: ${MTU}
+          linkMTUOverhead: 50
+          ipam:
+            type: rancher-cni-ipam
+            logToFile: /var/log/rancher-cni.log
+            isDebugLevel: ${RANCHER_DEBUG}
+            routes:
+              - dst: 169.254.169.250/32
   cni-driver:
     privileged: true
     image: rancher/net:v0.11.2

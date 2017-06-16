@@ -17,6 +17,36 @@ services:
       io.rancher.cni.link_mtu_overhead: '0'
       io.rancher.network.macsync: 'true'
       io.rancher.network.arpsync: 'true'
+    network_driver:
+      name: Rancher IPsec
+      default_network:
+        name: ipsec
+        host_ports: true
+        subnets:
+        - network_address: $SUBNET
+        dns:
+        - 169.254.169.250
+        dns_search:
+        - rancher.internal
+      cni_config:
+        '10-rancher.conf':
+          name: rancher-cni-network
+          type: rancher-bridge
+          bridge: $DOCKER_BRIDGE
+          bridgeSubnet: $SUBNET
+          logToFile: /var/log/rancher-cni.log
+          isDebugLevel: ${RANCHER_DEBUG}
+          isDefaultGateway: true
+          hostNat: true
+          hairpinMode: true
+          mtu: ${MTU}
+          linkMTUOverhead: 98
+          ipam:
+            type: rancher-cni-ipam
+            logToFile: /var/log/rancher-cni.log
+            isDebugLevel: ${RANCHER_DEBUG}
+            routes:
+            - dst: 169.254.169.250/32
   router:
     cap_add:
       - NET_ADMIN
