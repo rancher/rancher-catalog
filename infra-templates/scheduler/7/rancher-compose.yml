@@ -16,6 +16,8 @@ scheduler:
         request_line: GET /healthcheck HTTP/1.0
         port: 80
         interval: 2000
+        initializing_timeout: 10000
+        reinitializing_timeout: 10000
         response_timeout: 2000
         unhealthy_threshold: 3
         healthy_threshold: 2
