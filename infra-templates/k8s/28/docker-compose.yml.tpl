@@ -176,7 +176,7 @@ kubectld:
     environment:
         SERVER: http://kubernetes.kubernetes.rancher.internal
         LISTEN: ":8091"
-    image: rancher/kubectld:v0.6.6
+    image: rancher/kubectld:v0.6.7
     links:
         - kubernetes
 
@@ -191,7 +191,7 @@ kubectl-shell:
         io.rancher.k8s.token: "true"
     command:
         - kubectl-shell-entry.sh
-    image: rancher/kubectld:v0.6.6
+    image: rancher/kubectld:v0.6.7
     privileged: true
 
 scheduler:
@@ -274,7 +274,7 @@ rancher-ingress-controller:
 {{- end }}
 
 rancher-kubernetes-auth:
-    image: rancher/kubernetes-auth:v0.0.3
+    image: rancher/kubernetes-auth:v0.0.4
     labels:
         {{- if eq .Values.CONSTRAINT_TYPE "required" }}
         io.rancher.scheduler.affinity:host_label: orchestration=true
