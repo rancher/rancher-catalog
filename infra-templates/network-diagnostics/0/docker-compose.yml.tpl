@@ -1,7 +1,7 @@
 version: '2'
 services:
   network-diagnostics:
-    image: rancher/network-diagnostics:0.1.1
+    image: rancher/network-diagnostics:v0.1.1
     labels:
       io.rancher.container.create_agent: 'true'
       io.rancher.container.agent.role: 'environmentAdmin'
