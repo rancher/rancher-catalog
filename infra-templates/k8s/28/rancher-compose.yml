@@ -1,9 +1,8 @@
 .catalog:
   name: Kubernetes
-  version: v1.5.4-rancher1-4.1
+  version: v1.6.6-rancher1-4
   description: Rancher Kubernetes service
-  minimum_rancher_version: v1.6.0-alpha1
-  maximum_rancher_version: v1.6.2
+  minimum_rancher_version: v1.6.3-rc1
   questions:
   - variable: CONSTRAINT_TYPE
     label: Plane Isolation
@@ -23,21 +22,30 @@
     options:
      - rancher
      - aws
+  - variable: RBAC
+    description: Enable Kubernetes role-based access control with integrated Rancher authentication.
+    label: Kubernetes RBAC
+    required: true
+    default: false
+    type: boolean
   - variable: REGISTRY
     description: The registry to pull addon images and the optional pod infra container image. This should be set to the private registry from which the images for addon-services (i.e. helm, heapster, dashboard, dns) and the pod infra container image should be pulled.
     label: Private Registry for Add-Ons and Pod Infra Container Image
     required: false
     default: ""
     type: string
+  - variable: ENABLE_RANCHER_INGRESS_CONTROLLER
+    description: Deploy the Rancher ingress controller which automatically provisions Rancher load balancers in response to Kubernetes ingress creation events.
+    label: Enable Rancher Ingress Controller
+    required: true
+    default: true
+    type: boolean
   - variable: ENABLE_ADDONS
     label: Enable Kubernetes Add-ons
     description: Setting this to `false` will disable Dashboard, Helm, SkyDNS, and other Kubernetes add-on services. This is meant for advanced users who want to deploy custom versions of these add-ons.
     required: true
     default: true
-    type: enum
-    options:
-     - true
-     - false
+    type: boolean
   - variable: POD_INFRA_CONTAINER_IMAGE
     label: Pod Infra Container Image
     description: The image whose network/ipc namespaces containers in each pod will use. It uses kubelet default if left empty. Do not add the private registry to this field, update the `Private Registry for Add-Ons and Pod Infra Container Image` field with the registry information.
@@ -84,8 +92,7 @@ kubernetes:
         sans:
         - "IP:10.43.0.1"
     health_check:
-        request_line: GET /healthz HTTP/1.0
-        port: 80
+        port: 6443
         interval: 2000
         response_timeout: 2000
         unhealthy_threshold: 3
@@ -149,18 +156,6 @@ controller-manager:
 kubectld:
     health_check:
         port: 10240
-        interval: 2000
-        response_timeout: 2000
-        unhealthy_threshold: 3
-        healthy_threshold: 2
-        initializing_timeout: 60000
-        reinitializing_timeout: 60000
-
-
-rancher-ingress-controller:
-    health_check:
-        request_line: GET /healthz HTTP/1.0
-        port: 10241
         interval: 2000
         response_timeout: 2000
         unhealthy_threshold: 3
