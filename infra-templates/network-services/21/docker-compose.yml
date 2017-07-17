@@ -44,7 +44,7 @@ services:
   dns:
     image: rancher/dns:v0.15.1
     network_mode: container:metadata
-    command: rancher-dns --metadata-server=localhost --answers=/etc/rancher-dns/answers.json --recurser-timeout ${DNS_RECURSER_TIMEOUT}
+    command: rancher-dns --metadata-server=localhost --answers=/etc/rancher-dns/answers.json --recurser-timeout ${DNS_RECURSER_TIMEOUT} --ttl ${TTL}
     labels:
       io.rancher.scheduler.global: 'true'
     logging:
