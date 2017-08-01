@@ -6,12 +6,10 @@ This stack provides the following services:
 * DNS
 * Network Manager
 
-### Changelog for v0.2.4
+### Changelog for v0.2.5
 
-Default timeout for internal Rancher DNS was updated from 10 seconds to 1 second.
-
-#### Network Manager [rancher/network-manager:v0.7.5]
-* Fixes the logic of figuring out local networks in an environment to support different CNI plugins.
+#### Metadata [rancher/rancher-metadata:v0.9.3]
+* Fixes around decoding delta when reading from file and event stream
 
 ### Configuration Options
 
