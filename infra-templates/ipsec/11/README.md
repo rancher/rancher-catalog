@@ -6,13 +6,10 @@ Rancher networking plugin using IPsec.
 
 Traffic to and from hosts require UDP ports `500` and `4500` to be open.
 
-### Changelog - 0.1.2
+### Changelog - 0.1.3
 
-This version removes the `cni-driver` service as a sidekick of the `ipsec` service and makes it standalone.
-
-#### Router and CNI Driver [rancher/net:v0.11.5]
-* Fixed an issue where tunnels were getting estabilished for stopped ipsec containers.
-* Fixed an issue where custom subnets were forcing `/16`
+#### Router and CNI Driver [rancher/net:v0.11.6]
+* Fixes the container fetch logic to address service upgrade issues.
 
 ### Configuration options
 * `RANCHER_DEBUG`
