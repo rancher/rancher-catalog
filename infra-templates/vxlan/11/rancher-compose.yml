@@ -1,8 +1,8 @@
 .catalog:
-  name: "Rancher IPsec"
-  version: "0.1.3"
-  minimum_rancher_version: v1.6.6-rc1
-  maximum_rancher_version: v1.6.7
+  name: "Rancher VXLAN"
+  version: "v0.2.1"
+  minimum_rancher_version: v1.6.8-rc1
+  upgrade_from: v0.2.0 || >v0.2.0
   questions:
     - variable: "DOCKER_BRIDGE"
       label: "Docker Bridge"
@@ -18,7 +18,7 @@
       type: int
     - variable: "SUBNET"
       label: "Subnet"
-      description: "The subnet to use for the managed IPSEC network."
+      description: "The subnet to use for the managed network."
       type: "string"
       default: '10.42.0.0/16'
       required: true
