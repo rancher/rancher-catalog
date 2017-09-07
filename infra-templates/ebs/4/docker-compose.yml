@@ -3,7 +3,7 @@ services:
   ebs-driver:
     privileged: true
     network_mode: host
-    image: rancher/storage-ebs:v0.8.1
+    image: rancher/storage-ebs:v0.8.8
     labels:
       io.rancher.scheduler.global: 'true'
       io.rancher.container.create_agent: 'true'
@@ -11,6 +11,7 @@ services:
     environment:
       AWS_SECRET_ACCESS_KEY: '${AWS_SECRET_ACCESS_KEY}'
       AWS_ACCESS_KEY_ID: '${AWS_ACCESS_KEY_ID}'
+      RANCHER_DEBUG: '${RANCHER_DEBUG}'
     volumes:
     - /run:/run
     - /var/run:/var/run
