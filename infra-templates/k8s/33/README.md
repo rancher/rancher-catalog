@@ -1,17 +1,17 @@
-## Kubernetes v1.7.4
+## Kubernetes v1.8.0-beta
 
 ### Software Versions
 
-* Kubernetes v1.7.4
+* Kubernetes v1.8.0-beta
 * Etcd v2.3.7
 
 ### Upgrading to this Version
 
 Warning: The existing template version _must be_ `v1.2.4-rancher9` or later. Ignoring this will result in data loss. For older templates, please first upgrade to `v1.5.4-rancher1`.
 
-### Changelog for Kubernetes 1.7.4
+### Changelog for Kubernetes 1.8.0-beta
 
-* Added healthcheck to addon-starter
+* Added configurable value to service cluster IP cidr.
 
 ### Required Open Ports on hosts
 
@@ -23,7 +23,7 @@ If you want to separate the planes for resiliency by labeling your hosts to sepa
 
 ### KubeDNS
 
-KubeDNS is enabled for name resolution as described in the [Kubernetes DNS docs](http://kubernetes.io/docs/admin/dns/). The DNS service IP address is `10.43.0.10`.
+KubeDNS is enabled for name resolution as described in the [Kubernetes DNS docs](http://kubernetes.io/docs/admin/dns/). The DNS service IP address is `10.43.0.10` by default.
 
 ### Audit Logs
 
