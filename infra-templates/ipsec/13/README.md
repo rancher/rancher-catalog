@@ -6,15 +6,19 @@ Rancher networking plugin using IPsec.
 
 Traffic to and from hosts require UDP ports `500` and `4500` to be open.
 
-### Changelog - 0.1.4
+### Changelog - 0.2.0
 
-#### Router and CNI Driver [rancher/net:v0.11.9]
-* Use of rancher-metadata IP address to avoid name resolution
-* Configurable replay window size
-* Configurable rekey intervals
+#### Router and CNI Driver [rancher/net:v0.12.0]
+* Refactored to have a clean separation with rest of the plugins.
 
 ### Configuration options
 * `RANCHER_DEBUG`
+
+#### ipsec
+
+* `IPSEC_REPLAY_WINDOW_SIZE`
+* `IPSEC_IKE_SA_REKEY_INTERVAL`
+* `IPSEC_CHILD_SA_REKEY_INTERVAL`
 
 #### cni-driver
 

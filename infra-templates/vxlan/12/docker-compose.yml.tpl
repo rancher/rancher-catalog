@@ -1,46 +1,31 @@
 version: '2'
 services:
   vxlan:
-    # IMPORTANT!!!! DO NOT CHANGE VERSION ON UPGRADE
-    image: rancher/net:holder
-    command: sh -c "echo Refer to router sidekick for logs; mkfifo f; exec cat f"
-    network_mode: vxlan
+    cap_add:
+      - NET_ADMIN
+    image: rancher/net:v0.12.0
+    command: start-vxlan.sh
+    network_mode: host
+    environment:
+      RANCHER_DEBUG: '${RANCHER_DEBUG}'
     ports:
       - 4789:4789/udp
     labels:
-      io.rancher.sidekicks: router
       io.rancher.scheduler.global: 'true'
       io.rancher.cni.link_mtu_overhead: '0'
       io.rancher.internal.service.vxlan: 'true'
       io.rancher.service.selector.link: io.rancher.internal.service.vxlan=true
-      io.rancher.network.macsync: 'true'
-      io.rancher.network.arpsync: 'true'
+      io.rancher.network.macsync: 'false'
+      io.rancher.network.arpsync: 'false'
+      io.rancher.container.dns: 'true'
     logging:
       driver: json-file
       options:
         max-size: 25m
         max-file: '2'
-  router:
-    cap_add:
-      - NET_ADMIN
-    image: rancher/net:v0.11.9
-    network_mode: container:vxlan
-    environment:
-      RANCHER_DEBUG: '${RANCHER_DEBUG}'
-      VXLAN_VTEP_MTU: '${MTU}'
-    command: start-vxlan.sh
-    logging:
-      driver: json-file
-      options:
-        max-size: 25m
-        max-file: '2'
-    sysctls:
-      net.ipv4.conf.all.send_redirects: '0'
-      net.ipv4.conf.default.send_redirects: '0'
-      net.ipv4.conf.eth0.send_redirects: '0'
   cni-driver:
     privileged: true
-    image: rancher/net:v0.11.9
+    image: rancher/net:v0.12.0
     command: sh -c "touch /var/log/rancher-cni.log && exec tail ---disable-inotify -F /var/log/rancher-cni.log"
     network_mode: host
     pid: host
@@ -84,5 +69,3 @@ services:
             subnetPrefixSize: /{{ .Values.SUBNET_PREFIX }}
             logToFile: /var/log/rancher-cni.log
             isDebugLevel: ${RANCHER_DEBUG}
-            routes:
-              - dst: 169.254.169.250/32
