@@ -16,7 +16,7 @@ kubelet:
         - --register-node=true
         - --cloud-provider=${CLOUD_PROVIDER}
         - --healthz-bind-address=0.0.0.0
-        - --cluster-dns=10.43.0.10
+        - --cluster-dns=${DNS_CLUSTER_IP}
         - --cluster-domain=cluster.local
         - --network-plugin=cni
         - --cni-conf-dir=/etc/cni/managed.d
@@ -28,7 +28,7 @@ kubelet:
         {{- range $i, $elem := splitPreserveQuotes .Values.ADDITIONAL_KUBELET_FLAGS }}
         - {{ $elem }}
         {{- end }}
-    image: rancher/k8s:v1.7.4-rancher2
+    image: rancher/k8s:v1.8.0-beta.1-rancher2
     volumes:
         - /run:/run
         - /var/run:/var/run
@@ -63,7 +63,7 @@ kubelet-unschedulable:
         - --register-node=true
         - --cloud-provider=${CLOUD_PROVIDER}
         - --healthz-bind-address=0.0.0.0
-        - --cluster-dns=10.43.0.10
+        - --cluster-dns=${DNS_CLUSTER_IP}
         - --cluster-domain=cluster.local
         - --network-plugin=cni
         - --cni-conf-dir=/etc/cni/managed.d
@@ -76,7 +76,7 @@ kubelet-unschedulable:
         {{- range $i, $elem := splitPreserveQuotes .Values.ADDITIONAL_KUBELET_FLAGS }}
         - {{ $elem }}
         {{- end }}
-    image: rancher/k8s:v1.7.4-rancher2
+    image: rancher/k8s:v1.8.0-beta.1-rancher2
     volumes:
         - /run:/run
         - /var/run:/var/run
@@ -102,7 +102,7 @@ proxy:
         - --kubeconfig=/etc/kubernetes/ssl/kubeconfig
         - --v=2
         - --healthz-bind-address=0.0.0.0
-    image: rancher/k8s:v1.7.4-rancher2
+    image: rancher/k8s:v1.8.0-beta.1-rancher2
     labels:
         io.rancher.container.dns: "true"
         io.rancher.scheduler.global: "true"
@@ -155,7 +155,7 @@ kubernetes:
     command:
         - kube-apiserver
         - --storage-backend=etcd2
-        - --service-cluster-ip-range=10.43.0.0/16
+        - --service-cluster-ip-range=${SERVICE_CLUSTER_CIDR}
         - --etcd-servers=http://etcd.kubernetes.rancher.internal:2379
         - --insecure-bind-address=0.0.0.0
         - --insecure-port=0
@@ -176,7 +176,7 @@ kubernetes:
         {{- end }}
     environment:
         KUBERNETES_URL: https://kubernetes.kubernetes.rancher.internal:6443
-    image: rancher/k8s:v1.7.4-rancher2
+    image: rancher/k8s:v1.8.0-beta.1-rancher2
     links:
         - etcd
 
@@ -230,7 +230,7 @@ scheduler:
         - kube-scheduler
         - --kubeconfig=/etc/kubernetes/ssl/kubeconfig
         - --address=0.0.0.0
-    image: rancher/k8s:v1.7.4-rancher2
+    image: rancher/k8s:v1.8.0-beta.1-rancher2
     labels:
         {{- if eq .Values.CONSTRAINT_TYPE "required" }}
         io.rancher.scheduler.affinity:host_label: orchestration=true
@@ -248,7 +248,7 @@ controller-manager:
         - --address=0.0.0.0
         - --root-ca-file=/etc/kubernetes/ssl/ca.pem
         - --service-account-private-key-file=/etc/kubernetes/ssl/key.pem
-    image: rancher/k8s:v1.7.4-rancher2
+    image: rancher/k8s:v1.8.0-beta.1-rancher2
     labels:
         {{- if eq .Values.CONSTRAINT_TYPE "required" }}
         io.rancher.scheduler.affinity:host_label: orchestration=true
@@ -326,7 +326,7 @@ rancher-kubernetes-auth:
 
 {{- if eq .Values.ENABLE_ADDONS "true" }}
 addon-starter:
-    image: rancher/k8s:v1.7.4-rancher2
+    image: rancher/k8s:v1.8.0-beta.1-rancher2
     labels:
         {{- if eq .Values.CONSTRAINT_TYPE "required" }}
         io.rancher.scheduler.affinity:host_label: orchestration=true
@@ -338,6 +338,7 @@ addon-starter:
         REGISTRY: ${REGISTRY}
         INFLUXDB_HOST_PATH: ${INFLUXDB_HOST_PATH}
         DNS_REPLICAS: ${DNS_REPLICAS}
+        DNS_CLUSTER_IP: ${DNS_CLUSTER_IP}
     command:
         - addons-update.sh
     links:
