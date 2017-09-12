@@ -27,18 +27,18 @@ kubelet:
         {{- range $i, $elem := splitPreserveQuotes .Values.ADDITIONAL_KUBELET_FLAGS }}
         - {{ $elem }}
         {{- end }}
-    image: rancher/k8s:v1.8.0-beta.1-rancher2
+    image: rancher/k8s:v1.8.0-beta.1-rancher3
     volumes:
-        - /run:/run
-        - /var/run:/var/run
-        - /sys:/sys:ro
-        - /var/lib/docker:/var/lib/docker
+        - /run:/run:rprivate
+        - /var/run:/var/run:rprivate
+        - /sys:/sys:ro,rprivate
+        - /var/lib/docker:/var/lib/docker:rprivate
         - /var/lib/kubelet:/var/lib/kubelet:shared
-        - /var/log/containers:/var/log/containers
-        - /var/log/pods:/var/log/pods
+        - /var/log/containers:/var/log/containers:rprivate
+        - /var/log/pods:/var/log/pods:rprivate
         - rancher-cni-driver:/etc/cni:ro
         - rancher-cni-driver:/opt/cni:ro
-        - /dev:/host/dev
+        - /dev:/host/dev:rprivate
     net: host
     pid: host
     ipc: host
@@ -74,18 +74,18 @@ kubelet-unschedulable:
         {{- range $i, $elem := splitPreserveQuotes .Values.ADDITIONAL_KUBELET_FLAGS }}
         - {{ $elem }}
         {{- end }}
-    image: rancher/k8s:v1.8.0-beta.1-rancher2
+    image: rancher/k8s:v1.8.0-beta.1-rancher3
     volumes:
-        - /run:/run
-        - /var/run:/var/run
-        - /sys:/sys:ro
-        - /var/lib/docker:/var/lib/docker
+        - /run:/run:rprivate
+        - /var/run:/var/run:rprivate
+        - /sys:/sys:ro,rprivate
+        - /var/lib/docker:/var/lib/docker:rprivate
         - /var/lib/kubelet:/var/lib/kubelet:shared
-        - /var/log/containers:/var/log/containers
-        - /var/log/pods:/var/log/pods
+        - /var/log/containers:/var/log/containers:rprivate
+        - /var/log/pods:/var/log/pods:rprivate
         - rancher-cni-driver:/etc/cni:ro
         - rancher-cni-driver:/opt/cni:ro
-        - /dev:/host/dev
+        - /dev:/host/dev:rprivate
     net: host
     pid: host
     ipc: host
@@ -100,7 +100,7 @@ proxy:
         - --kubeconfig=/etc/kubernetes/ssl/kubeconfig
         - --v=2
         - --healthz-bind-address=0.0.0.0
-    image: rancher/k8s:v1.8.0-beta.1-rancher2
+    image: rancher/k8s:v1.8.0-beta.1-rancher3
     labels:
         io.rancher.container.dns: "true"
         io.rancher.scheduler.global: "true"
@@ -175,7 +175,7 @@ kubernetes:
         {{- end }}
     environment:
         KUBERNETES_URL: https://kubernetes.kubernetes.rancher.internal:6443
-    image: rancher/k8s:v1.8.0-beta.1-rancher2
+    image: rancher/k8s:v1.8.0-beta.1-rancher3
     links:
         - etcd
 
@@ -229,7 +229,7 @@ scheduler:
         - kube-scheduler
         - --kubeconfig=/etc/kubernetes/ssl/kubeconfig
         - --address=0.0.0.0
-    image: rancher/k8s:v1.8.0-beta.1-rancher2
+    image: rancher/k8s:v1.8.0-beta.1-rancher3
     labels:
         {{- if eq .Values.CONSTRAINT_TYPE "required" }}
         io.rancher.scheduler.affinity:host_label: orchestration=true
@@ -247,7 +247,7 @@ controller-manager:
         - --address=0.0.0.0
         - --root-ca-file=/etc/kubernetes/ssl/ca.pem
         - --service-account-private-key-file=/etc/kubernetes/ssl/key.pem
-    image: rancher/k8s:v1.8.0-beta.1-rancher2
+    image: rancher/k8s:v1.8.0-beta.1-rancher3
     labels:
         {{- if eq .Values.CONSTRAINT_TYPE "required" }}
         io.rancher.scheduler.affinity:host_label: orchestration=true
@@ -325,7 +325,7 @@ rancher-kubernetes-auth:
 
 {{- if eq .Values.ENABLE_ADDONS "true" }}
 addon-starter:
-    image: rancher/k8s:v1.8.0-beta.1-rancher2
+    image: rancher/k8s:v1.8.0-beta.1-rancher3
     labels:
         {{- if eq .Values.CONSTRAINT_TYPE "required" }}
         io.rancher.scheduler.affinity:host_label: orchestration=true
