@@ -134,6 +134,9 @@ services:
       reinitializing_timeout: 60000
     retain_ip: true
 
+  etcd:
+    retain_ip: true
+    
   rancher-kubernetes-agent:
     health_check:
       request_line: GET /healthcheck HTTP/1.0
