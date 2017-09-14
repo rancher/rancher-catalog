@@ -1,0 +1,4 @@
+name: Core Services
+category: Framework
+labels:
+  io.rancher.certified: rancher
