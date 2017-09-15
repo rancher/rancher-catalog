@@ -55,6 +55,23 @@ services:
       options:
         max-size: 25m
         max-file: '2'
+  healthcheck:
+    labels:
+      io.rancher.container.create_agent: 'true'
+      io.rancher.scheduler.global: 'true'
+    image: rancher/healthcheck:v0.3.3
+    command: healthcheck --metadata-address 169.254.169.250
+    logging:
+      driver: json-file
+      options:
+        max-size: 25m
+        max-file: '2'
+    health_check:
+        port: 42
+        interval: 2000
+        response_timeout: 2000
+        unhealthy_threshold: 3
+        healthy_threshold: 2
 
 catalog:
   questions:
