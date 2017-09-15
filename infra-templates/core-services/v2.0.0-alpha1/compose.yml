@@ -266,7 +266,7 @@ catalog:
     label: Type of Networking
     description: Select which type of networking you'd like to use.
     required: true
-    default: vxlan
+    default: ipsec
     type: enum
     options:
      - ipsec
