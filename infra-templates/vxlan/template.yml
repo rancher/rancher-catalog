@@ -1,0 +1,4 @@
+name: Rancher VXLAN
+category: Networking
+labels:
+  io.rancher.certified: rancher
