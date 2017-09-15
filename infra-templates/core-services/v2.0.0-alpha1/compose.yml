@@ -28,7 +28,7 @@ services:
   metadata:
     cap_add:
     - NET_ADMIN
-    image: ibuildthecloud/metadata:b0ec623
+    image: rancher/metadata:v1.0.0
     network_mode: bridge
     labels:
       io.rancher.sidekicks: dns
