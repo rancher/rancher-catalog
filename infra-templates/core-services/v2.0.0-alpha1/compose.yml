@@ -74,7 +74,19 @@ services:
         response_timeout: 2000
         unhealthy_threshold: 3
         healthy_threshold: 2
- {{- if eq .Values.NETWORKING "ipsec" }}
+
+{{- if eq .Cluster.Orchestration "kubernetes" }}
+  network-driver:
+    network_driver:
+      name: Kubernetes Networking
+      default_network:
+        name: k8s
+        host_ports: {{ .Values.HOST_PORTS }}
+        dns:
+        - 169.254.169.250
+{{- else }}
+
+  {{- if eq .Values.NETWORKING "ipsec" }}
   ipsec:
     # IMPORTANT!!!! DO NOT CHANGE VERSION ON UPGRADE
     image: rancher/net:holder
@@ -136,8 +148,6 @@ services:
         - network_address: $SUBNET
         dns:
         - 169.254.169.250
-        dns_search:
-        - rancher.internal
       cni_config:
         '10-rancher.conf':
           name: rancher-cni-network
@@ -224,8 +234,6 @@ services:
         - network_address: $SUBNET
         dns:
         - 169.254.169.250
-        dns_search:
-        - rancher.internal
       cni_config:
         '10-rancher-vxlan.conf':
           name: rancher-cni-network
@@ -249,6 +257,7 @@ services:
             routes:
               - dst: 169.254.169.250/32
   {{- end }}
+{{- end }}
 
 catalog:
   questions:
