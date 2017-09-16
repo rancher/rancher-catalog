@@ -35,6 +35,7 @@ services:
       io.rancher.container.create_agent: 'true'
       io.rancher.scheduler.global: 'true'
       io.rancher.container.agent_service.metadata: 'true'
+      io.rancher.container.orchestration: 'cattle'
     logging:
       driver: json-file
       options:
@@ -50,6 +51,7 @@ services:
     command: rancher-dns --listen 169.254.169.250:53 --metadata-server=localhost --answers=/etc/rancher-dns/answers.json --recurser-timeout ${DNS_RECURSER_TIMEOUT} --ttl ${TTL}
     labels:
       io.rancher.scheduler.global: 'true'
+      io.rancher.container.orchestration: 'cattle'
     logging:
       driver: json-file
       options:
