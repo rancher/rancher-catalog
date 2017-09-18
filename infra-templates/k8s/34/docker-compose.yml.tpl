@@ -350,7 +350,7 @@ services:
     volumes:
     - etcd-data:/data:z
     {{- if ne .Values.RESTORE_BACKUP "" }}
-    - etcd-backup:/backup:z
+    - /var/etcd/backups:/backup:z
     {{- end }}
     health_check:
       port: 2378
@@ -381,7 +381,7 @@ services:
     environment:
       RANCHER_DEBUG: 'true'
     volumes:
-    - etcd-backup:/backup:z
+    - /var/etcd/backups:/backup:z
     links:
     - etcd
   {{- end }}
