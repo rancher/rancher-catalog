@@ -1,11 +1,18 @@
 version: '2'
+
+{{- $netManagerImage:="rancher/network-manager:v0.8.2" }}
+{{- $netImage:="rancher/net:v0.12.2" }}
+{{- $metadataImage:="rancher/metadata:v1.0.1" }}
+{{- $dnsImage:="rancher/dns:v0.16.2" }}
+{{- $hcImage:="rancher/healthcheck:v0.3.3" }}
+
 services:
   network-manager:
-    image: rancher/network-manager:v0.8.2
+    image: {{$netManagerImage}}
     privileged: true
     network_mode: host
     pid: host
-    command: plugin-manager --metadata-url http://169.254.169.250/2016-07-29
+    command: plugin-manager --metadata-address 169.254.169.250 --disable-routesync --disable-cni-setup --metadata-listen-port 9346
     environment:
       DOCKER_BRIDGE: docker0
       METADATA_IP: 169.254.169.250
@@ -20,48 +27,56 @@ services:
     - rancher-cni-driver:/opt/cni
     labels:
       io.rancher.scheduler.global: 'true'
+      {{- if and (eq .Cluster.Orchestration "kubernetes") .Cluster.Embedded }}
+      io.rancher.container.orchestration: 'cattle'
+      {{- end }}
     logging:
       driver: json-file
       options:
         max-size: 25m
         max-file: '2'
+
   metadata:
     cap_add:
     - NET_ADMIN
-    image: rancher/metadata:v1.0.0
-    network_mode: bridge
+    image: {{$metadataImage}}
+    network_mode: host
     labels:
-      io.rancher.sidekicks: dns
       io.rancher.container.create_agent: 'true'
       io.rancher.scheduler.global: 'true'
       io.rancher.container.agent_service.metadata: 'true'
+      {{- if and (eq .Cluster.Orchestration "kubernetes") .Cluster.Embedded }}
       io.rancher.container.orchestration: 'cattle'
+      {{- end }}
     logging:
       driver: json-file
       options:
         max-size: 25m
         max-file: '2'
-    sysctls:
-      net.ipv4.conf.all.send_redirects: '0'
-      net.ipv4.conf.default.send_redirects: '0'
-      net.ipv4.conf.eth0.send_redirects: '0'
+
   dns:
-    image: rancher/dns:v0.16.2
-    network_mode: container:metadata
-    command: rancher-dns --listen 169.254.169.250:53 --metadata-server=localhost --answers=/etc/rancher-dns/answers.json --recurser-timeout ${DNS_RECURSER_TIMEOUT} --ttl ${TTL}
+    image: {{$dnsImage}}
+    network_mode: host
+    command: rancher-dns --listen 169.254.169.250:53 --metadata-server=169.254.169.250 --answers=/etc/rancher-dns/answers.json --recurser-timeout ${DNS_RECURSER_TIMEOUT} --ttl ${TTL}
     labels:
       io.rancher.scheduler.global: 'true'
+      {{- if and (eq .Cluster.Orchestration "kubernetes") .Cluster.Embedded }}
       io.rancher.container.orchestration: 'cattle'
+      {{- end }}
     logging:
       driver: json-file
       options:
         max-size: 25m
         max-file: '2'
+
   healthcheck:
     labels:
       io.rancher.container.create_agent: 'true'
       io.rancher.scheduler.global: 'true'
-    image: rancher/healthcheck:v0.3.3
+      {{- if and (eq .Cluster.Orchestration "kubernetes") .Cluster.Embedded }}
+      io.rancher.container.orchestration: 'cattle'
+      {{- end }}
+    image: {{$hcImage}}
     command: healthcheck --metadata-address 169.254.169.250
     logging:
       driver: json-file
@@ -75,7 +90,7 @@ services:
         unhealthy_threshold: 3
         healthy_threshold: 2
 
-{{- if eq .Cluster.Orchestration "kubernetes" }}
+{{- if and (eq .Cluster.Orchestration "kubernetes") (not .Cluster.Embedded) }}
   network-driver:
     network_driver:
       name: Kubernetes Networking
@@ -88,8 +103,7 @@ services:
 
   {{- if eq .Values.NETWORKING "ipsec" }}
   ipsec:
-    # IMPORTANT!!!! DO NOT CHANGE VERSION ON UPGRADE
-    image: rancher/net:holder
+    image: {{$netImage}}
     command: sh -c "echo Refer to router sidekick for logs; mkfifo f; exec cat f"
     network_mode: ipsec
     ports:
@@ -101,12 +115,15 @@ services:
       io.rancher.cni.link_mtu_overhead: '0'
       io.rancher.network.macsync: 'true'
       io.rancher.network.arpsync: 'true'
+      io.rancher.container.orchestration: 'cattle'
   router:
     cap_add:
       - NET_ADMIN
-    image: rancher/net:v0.12.2
+    image: {{$netImage}}
     command: start-ipsec.sh
     network_mode: container:ipsec
+    labels:
+      io.rancher.container.orchestration: 'cattle'
     environment:
       RANCHER_DEBUG: '${RANCHER_DEBUG}'
       IPSEC_REPLAY_WINDOW_SIZE: '${IPSEC_REPLAY_WINDOW_SIZE}'
@@ -125,19 +142,25 @@ services:
       net.ipv4.xfrm4_gc_thresh: '2147483647'
   cni-driver:
     privileged: true
-    image: rancher/net:v0.12.2
-    command: sh -c "touch /var/log/rancher-cni.log && exec tail ---disable-inotify -F /var/log/rancher-cni.log"
+    image: {{$netImage}}
+    command: start-cni-driver.sh
     network_mode: host
     pid: host
+    environment:
+      RANCHER_DEBUG: '${RANCHER_DEBUG}'
     labels:
       io.rancher.scheduler.global: 'true'
       io.rancher.network.cni.binary: 'rancher-bridge'
       io.rancher.container.dns: 'true'
+      io.rancher.container.orchestration: 'cattle'
     logging:
       driver: json-file
       options:
         max-size: 25m
         max-file: '2'
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - rancher-cni-driver:/opt/cni-driver
     network_driver:
       name: Rancher IPsec
       default_network:
@@ -166,14 +189,11 @@ services:
             subnetPrefixSize: /{{ .Values.SUBNET_PREFIX }}
             logToFile: /var/log/rancher-cni.log
             isDebugLevel: ${RANCHER_DEBUG}
-            routes:
-            - dst: 169.254.169.250/32
   {{- end }}
 
   {{- if eq .Values.NETWORKING "vxlan" }}
   vxlan:
-    # IMPORTANT!!!! DO NOT CHANGE VERSION ON UPGRADE
-    image: rancher/net:holder
+    image: {{$netImage}}
     command: sh -c "echo Refer to router sidekick for logs; mkfifo f; exec cat f"
     network_mode: vxlan
     ports:
@@ -186,6 +206,7 @@ services:
       io.rancher.service.selector.link: io.rancher.internal.service.vxlan=true
       io.rancher.network.macsync: 'true'
       io.rancher.network.arpsync: 'true'
+      io.rancher.container.orchestration: 'cattle'
     logging:
       driver: json-file
       options:
@@ -194,8 +215,10 @@ services:
   router:
     cap_add:
       - NET_ADMIN
-    image: rancher/net:v0.12.2
+    image: {{$netImage}}
     network_mode: container:vxlan
+    labels:
+      io.rancher.container.orchestration: 'cattle'
     environment:
       RANCHER_DEBUG: '${RANCHER_DEBUG}'
       VXLAN_VTEP_MTU: '${MTU}'
@@ -209,21 +232,26 @@ services:
       net.ipv4.conf.all.send_redirects: '0'
       net.ipv4.conf.default.send_redirects: '0'
       net.ipv4.conf.eth0.send_redirects: '0'
+      io.rancher.container.orchestration: 'cattle'
   cni-driver:
     privileged: true
-    image: rancher/net:v0.12.2
-    command: sh -c "touch /var/log/rancher-cni.log && exec tail ---disable-inotify -F /var/log/rancher-cni.log"
+    image: {{$netImage}}
+    command: start-cni-driver.sh
     network_mode: host
     pid: host
     labels:
       io.rancher.scheduler.global: 'true'
       io.rancher.network.cni.binary: 'rancher-bridge'
       io.rancher.container.dns: 'true'
+      io.rancher.container.orchestration: 'cattle'
     logging:
       driver: json-file
       options:
         max-size: 25m
         max-file: '2'
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - rancher-cni-driver:/opt/cni-driver
     network_driver:
       name: Rancher VXLAN
       default_network:
@@ -253,8 +281,6 @@ services:
             subnetPrefixSize: /{{ .Values.SUBNET_PREFIX }}
             logToFile: /var/log/rancher-cni.log
             isDebugLevel: ${RANCHER_DEBUG}
-            routes:
-              - dst: 169.254.169.250/32
   {{- end }}
 {{- end }}
 
