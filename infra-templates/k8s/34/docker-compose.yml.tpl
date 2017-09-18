@@ -341,7 +341,7 @@ services:
       min: 1
 
   member:
-    image: rancher/etcd:v3.0.17-3
+    image: rancher/etcd:v3.0.17-4
     environment:
       RANCHER_DEBUG: 'true'
       ETCD_HEARTBEAT_INTERVAL: '${ETCD_HEARTBEAT_INTERVAL}'
@@ -367,7 +367,7 @@ services:
 
   {{- if eq .Values.ENABLE_BACKUPS "true" }}
   etcd-backup:
-    image: rancher/etcd:v3.0.17-3
+    image: rancher/etcd:v3.0.17-4
     entrypoint: /opt/rancher/etcdwrapper
     command:
     - rolling-backup
