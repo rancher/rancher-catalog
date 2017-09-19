@@ -1,8 +1,8 @@
 version: '2'
 
-{{- $netManagerImage:="rancher/network-manager:v0.8.2" }}
+{{- $netManagerImage:="rancher/network-manager:v0.8.3" }}
 {{- $netImage:="rancher/net:v0.12.2" }}
-{{- $metadataImage:="rancher/metadata:v1.0.1" }}
+{{- $metadataImage:="rancher/metadata:v1.0.2" }}
 {{- $dnsImage:="rancher/dns:v0.16.2" }}
 {{- $hcImage:="rancher/healthcheck:v0.3.3" }}
 
@@ -12,7 +12,7 @@ services:
     privileged: true
     network_mode: host
     pid: host
-    command: plugin-manager --metadata-address 169.254.169.250 --disable-routesync --disable-cni-setup --metadata-listen-port 9346
+    command: plugin-manager --metadata-address 169.254.169.250 --disable-routesync --disable-cni-setup --metadata-listen-port 9346{{ if and (eq .Cluster.Orchestration "kubernetes") (ne .Cluster.Embedded "true") }} --disable-macsync --disable-arpsync --disable-conntraksync --disable-vethsync{{ end }}
     environment:
       DOCKER_BRIDGE: docker0
       METADATA_IP: 169.254.169.250
