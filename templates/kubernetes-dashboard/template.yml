@@ -1,0 +1,3 @@
+name: kubernetes-dashboard
+labels:
+  io.rancher.certified: rancher

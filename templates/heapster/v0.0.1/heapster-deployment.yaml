@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: heapster
+  namespace: kube-system
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        task: monitoring
+        k8s-app: heapster
+    spec:
+      containers:
+      - name: heapster
+        image: gcr.io/google_containers/heapster-amd64:v1.4.0
+        command:
+        - /heapster
+        - --source=kubernetes:https://$KUBERNETES_SERVICE_HOST:443?inClusterConfig=true&useServiceAccount=true
+        - --sink=influxdb:http://monitoring-influxdb.kube-system.svc.cluster.local:8086?retention=0s
+      serviceAccountName: io-rancher-system

@@ -1,0 +1,36 @@
+apiVersion: "extensions/v1beta1"
+kind: "Deployment"
+metadata:
+  name: "tiller-deploy"
+  namespace: "kube-system"
+  labels:
+    app: "helm"
+    name: "tiller"
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: "helm"
+        name: "tiller"
+    spec:
+      serviceAccountName: "io-rancher-system"
+      containers:
+          - name: "tiller"
+            image: "gcr.io/kubernetes-helm/tiller:v2.3.0"
+            imagePullPolicy: "Always"
+            ports:
+             - name: "tiller"
+               containerPort: 44134
+            livenessProbe:
+                initialDelaySeconds: 1
+                timeoutSeconds: 1
+                httpGet:
+                    path: "/liveness"
+                    port: 44135
+            readinessProbe:
+                initialDelaySeconds: 1
+                timeoutSeconds: 1
+                httpGet:
+                    path: "/readiness"
+                    port: 44135
