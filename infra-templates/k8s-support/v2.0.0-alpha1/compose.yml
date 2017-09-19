@@ -2,7 +2,7 @@ version: '2'
 
 {{- $k8sImage:="rancher/netes:v1.7.4-rancher1-netes1" }}
 
-{{- if .Cluster.Embedded }}
+{{- if (eq .Cluster.Embedded "true") }}
 services:
   controller-manager:
     command:
