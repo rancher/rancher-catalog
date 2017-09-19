@@ -1,0 +1,78 @@
+version: '2'
+
+{{- $k8sImage:="rancher/netes:v1.7.4-rancher1-netes1" }}
+
+{{- if .Cluster.Embedded }}
+services:
+  controller-manager:
+    command:
+    - kube-controller-manager
+    - --kubeconfig=/etc/kubernetes/ssl/kubeconfig
+    - --cloud-provider=rancher
+    - --address=0.0.0.0
+    - --root-ca-file=/etc/kubernetes/ssl/ca.pem
+    - --service-account-private-key-file=/etc/kubernetes/ssl/key.pem
+    image: {{$k8sImage}}
+    network_mode: bridge
+    labels:
+      io.rancher.container.dns: "false"
+      io.rancher.container.create_agent: "true"
+      io.rancher.container.agent.role: environment
+      io.rancher.container.orchestration: 'cattle'
+    health_check:
+      request_line: GET /healthz HTTP/1.0
+      port: 10252
+
+  scheduler:
+    command:
+    - kube-scheduler
+    - --kubeconfig=/etc/kubernetes/ssl/kubeconfig
+    - --address=0.0.0.0
+    image: {{$k8sImage}}
+    network_mode: bridge
+    labels:
+      io.rancher.container.dns: "false"
+      io.rancher.container.create_agent: "true"
+      io.rancher.container.agent.role: environment
+      io.rancher.container.orchestration: 'cattle'
+    health_check:
+      request_line: GET /healthz HTTP/1.0
+      port: 10251
+
+  kubelet:
+    labels:
+      io.rancher.container.dns: "false"
+      io.rancher.container.create_agent: "true"
+      io.rancher.container.agent.role: environment
+      io.rancher.scheduler.global: "true"
+      io.rancher.container.orchestration: 'cattle'
+    command:
+    - kubelet
+    - --kubeconfig=/etc/kubernetes/ssl/kubeconfig
+    - --require-kubeconfig
+    - --allow-privileged=true
+    - --register-node=true
+    - --cloud-provider=auto-detect
+    - --healthz-bind-address=0.0.0.0
+    - --cluster-dns=10.43.0.10
+    - --cluster-domain=cluster.local
+    - --network-plugin=cni
+    - --cni-conf-dir=/etc/cni/managed.d
+    - --pod-infra-container-image=gcr.io/google_containers/pause-amd64:3.0
+    image: {{$k8sImage}}
+    volumes:
+    - /run:/run
+    - /var/run:/var/run
+    - /sys:/sys:ro
+    - /var/lib/docker:/var/lib/docker
+    - /var/lib/kubelet:/var/lib/kubelet:shared
+    - /var/log/containers:/var/log/containers
+    - /var/log/pods:/var/log/pods
+    - rancher-cni-driver:/etc/cni:ro
+    - rancher-cni-driver:/opt/cni:ro
+    - /dev:/host/dev
+    network_mode: host
+    pid: host
+    ipc: host
+    privileged: true
+{{- end }}
