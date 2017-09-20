@@ -1,0 +1,3 @@
+name: heapster
+labels:
+  io.rancher.certified: rancher
