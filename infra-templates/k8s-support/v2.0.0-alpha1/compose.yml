@@ -19,9 +19,9 @@ services:
       io.rancher.container.create_agent: "true"
       io.rancher.container.agent.role: environment
       io.rancher.container.orchestration: 'cattle'
-    health_check:
-      request_line: GET /healthz HTTP/1.0
-      port: 10252
+    #health_check:
+    #  request_line: GET /healthz HTTP/1.0
+    #  port: 10252
 
   scheduler:
     command:
@@ -35,9 +35,9 @@ services:
       io.rancher.container.create_agent: "true"
       io.rancher.container.agent.role: environment
       io.rancher.container.orchestration: 'cattle'
-    health_check:
-      request_line: GET /healthz HTTP/1.0
-      port: 10251
+    #health_check:
+    #  request_line: GET /healthz HTTP/1.0
+    #  port: 10251
 
   kubelet:
     labels:
