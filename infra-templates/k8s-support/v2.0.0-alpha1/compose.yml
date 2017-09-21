@@ -89,4 +89,17 @@ services:
     pid: host
     ipc: host
     privileged: true
+
+  proxy:
+    command:
+    - kube-proxy
+    - --kubeconfig=/etc/kubernetes/ssl/kubeconfig
+    - --v=2
+    - --healthz-bind-address=0.0.0.0
+    image: {{$k8sImage}}
+    labels:
+      io.rancher.container.dns: "false"
+      io.rancher.scheduler.global: "true"
+    privileged: true
+    network_mode: host
 {{- end }}
