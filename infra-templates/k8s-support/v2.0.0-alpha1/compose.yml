@@ -9,8 +9,9 @@ services:
       io.rancher.container.create_agent: "true"
       io.rancher.container.agent.role: environmentAdmin
       io.rancher.k8s.kubectld: "true"
-      io.rancher.k8s.token: "true"
+      {{- if (eq .Cluster.Embedded "false") }}
       io.rancher.kubernetes.service_account: rancher
+      {{- end }}
     command:
     - kubectl-shell-entry.sh
     image: {{$kubectlImage}}
