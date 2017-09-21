@@ -1,6 +1,7 @@
 version: '2'
 
 {{- $k8sImage:="rancher/netes:v1.7.4-rancher1-netes1" }}
+{{- $kubectlImage:="rancher/kubectld:v1.0.0" }}
 
 services:
   kubectl-shell:
@@ -12,7 +13,7 @@ services:
       io.rancher.kubernetes.service_account: rancher
     command:
     - kubectl-shell-entry.sh
-    image: rancher/kubectld:v1.0.0
+    image: {{$kubectlImage}}
     privileged: true
 
 {{- if (eq .Cluster.Embedded "true") }}
