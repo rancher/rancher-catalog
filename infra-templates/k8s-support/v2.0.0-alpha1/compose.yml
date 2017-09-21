@@ -76,3 +76,15 @@ services:
     ipc: host
     privileged: true
 {{- end }}
+
+  kubectl-shell:
+    labels:
+      io.rancher.container.create_agent: "true"
+      io.rancher.container.agent.role: environmentAdmin
+      io.rancher.k8s.kubectld: "true"
+      io.rancher.k8s.token: "true"
+      io.rancher.kubernetes.service_account: rancher
+    command:
+    - kubectl-shell-entry.sh
+    image: rancher/kubectld:v1.0.0
+    privileged: true
