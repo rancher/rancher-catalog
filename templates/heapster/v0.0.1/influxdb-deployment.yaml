@@ -17,7 +17,7 @@ spec:
         volumeMounts:
         - mountPath: /data
           name: influxdb-storage
-      serviceAccountName: io-rancher-system
+      serviceAccountName: rancher-heapster
       volumes:
       - name: influxdb-storage
         emptyDir: {}

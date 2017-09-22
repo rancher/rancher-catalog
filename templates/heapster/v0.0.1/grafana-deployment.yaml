@@ -41,7 +41,7 @@ spec:
           # If you're only using the API Server proxy, set this value instead:
           # value: /api/v1/proxy/namespaces/kube-system/services/monitoring-grafana/
           value: /
-      serviceAccountName: io-rancher-system
+      serviceAccountName: rancher-heapster
       volumes:
       - name: grafana-storage
         emptyDir: {}

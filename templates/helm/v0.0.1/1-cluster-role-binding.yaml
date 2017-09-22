@@ -4,7 +4,7 @@ metadata:
   name: addons-binding
 subjects:
 - kind: ServiceAccount
-  name: io-rancher-system
+  name: rancher-helm
   namespace: kube-system
 roleRef:
   kind: ClusterRole
