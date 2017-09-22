@@ -140,6 +140,18 @@
     required: false
     default: rancherlb
     type: string
+  - variable: HTTP_PROXY
+    description: "To be used when Kubernetes services are deployed on host(s) behind a proxy, i.e.: http(s)://<fqdn>:<port>"
+    label: HTTP proxy to be used by Kubernetes services
+    required: false
+    type: string
+  - variable: NO_PROXY
+    description: Comma separated string used to be excluded from the proxy
+    label: no_proxy to be used by Kubernetes services
+    required: false
+    default: rancher.internal,cluster.local,rancher-metadata,rancher-kubernetes-auth,kubernetes,169.254.169.254,169.254.169.250,10.42.0.0/16,10.43.0.0/16
+    type: string
+
 kubernetes:
     metadata:
         sans:

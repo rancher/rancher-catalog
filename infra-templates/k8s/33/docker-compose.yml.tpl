@@ -36,6 +36,12 @@ kubelet:
         {{- range $i, $elem := splitPreserveQuotes .Values.ADDITIONAL_KUBELET_FLAGS }}
         - {{ $elem }}
         {{- end }}
+    {{- if ne .Values.HTTP_PROXY "" }}
+    environment:
+        HTTP_PROXY: ${HTTP_PROXY}
+        HTTPS_PROXY: ${HTTP_PROXY}
+        NO_PROXY: ${NO_PROXY}
+    {{- end }}
     image: {{$k8sImage}}
     volumes:
         - /run:/run:rprivate
@@ -83,6 +89,12 @@ kubelet-unschedulable:
         {{- range $i, $elem := splitPreserveQuotes .Values.ADDITIONAL_KUBELET_FLAGS }}
         - {{ $elem }}
         {{- end }}
+    {{- if ne .Values.HTTP_PROXY "" }}
+    environment:
+        HTTP_PROXY: ${HTTP_PROXY}
+        HTTPS_PROXY: ${HTTP_PROXY}
+        NO_PROXY: ${NO_PROXY}
+    {{- end }}
     image: {{$k8sImage}}
     volumes:
         - /run:/run:rprivate
@@ -184,6 +196,11 @@ kubernetes:
         {{- end }}
     environment:
         KUBERNETES_URL: https://kubernetes.kubernetes.rancher.internal:6443
+        {{- if ne .Values.HTTP_PROXY "" }}
+        HTTP_PROXY: ${HTTP_PROXY}
+        HTTPS_PROXY: ${HTTP_PROXY}
+        NO_PROXY: ${NO_PROXY}
+        {{- end }}
     image: {{$k8sImage}}
     links:
         - etcd
@@ -257,6 +274,12 @@ controller-manager:
         - --address=0.0.0.0
         - --root-ca-file=/etc/kubernetes/ssl/ca.pem
         - --service-account-private-key-file=/etc/kubernetes/ssl/key.pem
+    {{- if ne .Values.HTTP_PROXY "" }}
+    environment:
+        HTTP_PROXY: ${HTTP_PROXY}
+        HTTPS_PROXY: ${HTTP_PROXY}
+        NO_PROXY: ${NO_PROXY}
+    {{- end }}
     image: {{$k8sImage}}
     labels:
         {{- if eq .Values.CONSTRAINT_TYPE "required" }}
