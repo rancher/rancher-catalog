@@ -1,10 +1,10 @@
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
-  name: addons-binding
+  name: rancher-kubernetes-dashboard-binding
 subjects:
 - kind: ServiceAccount
-  name: io-rancher-system
+  name: rancher-kubernetes-dashboard
   namespace: kube-system
 roleRef:
   kind: ClusterRole
