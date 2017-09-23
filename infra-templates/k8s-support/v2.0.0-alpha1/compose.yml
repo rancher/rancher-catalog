@@ -1,6 +1,6 @@
 version: '2'
 
-{{- $k8sImage:="rancher/netes:v1.7.4-netes2-1" }}
+{{- $k8sImage:="rancher/netes:v1.7.6-netes2-1" }}
 {{- $kubectlImage:="rancher/kubectld:v0.8.3" }}
 
 services:
