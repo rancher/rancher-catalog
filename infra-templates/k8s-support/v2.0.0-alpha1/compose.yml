@@ -1,7 +1,7 @@
 version: '2'
 
 {{- $k8sImage:="rancher/netes:v1.7.6-netes2-1" }}
-{{- $kubectlImage:="rancher/kubectld:v0.8.3" }}
+{{- $kubectlImage:="rancher/kubectld:v0.9.0" }}
 
 services:
   kubectl-shell:

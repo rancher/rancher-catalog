@@ -1,3 +1,3 @@
-name: kubernetes-dashboard
+name: Kubernetes Dashboard
 labels:
   io.rancher.certified: rancher
