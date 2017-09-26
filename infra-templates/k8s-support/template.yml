@@ -1,1 +1,3 @@
 name: Kubernetes Support
+labels:
+  io.rancher.certified: rancher
