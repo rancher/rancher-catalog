@@ -151,7 +151,6 @@ services:
     labels:
       io.rancher.scheduler.global: 'true'
       io.rancher.network.cni.binary: 'rancher-bridge'
-      io.rancher.container.dns: 'true'
       io.rancher.container.orchestration: 'cattle'
     logging:
       driver: json-file
@@ -242,7 +241,6 @@ services:
     labels:
       io.rancher.scheduler.global: 'true'
       io.rancher.network.cni.binary: 'rancher-bridge'
-      io.rancher.container.dns: 'true'
       io.rancher.container.orchestration: 'cattle'
     logging:
       driver: json-file
