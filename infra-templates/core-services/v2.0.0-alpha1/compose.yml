@@ -12,7 +12,7 @@ services:
     privileged: true
     network_mode: host
     pid: host
-    command: plugin-manager --metadata-address 169.254.169.250 --disable-routesync --disable-cni-setup --metadata-listen-port 9346{{ if (eq .Cluster.Orchestration "kubernetes") }} --disable-dns-setup{{ if (ne .Cluster.Embedded "true") }} --disable-macsync --disable-arpsync --disable-conntracksync --disable-vethsync{{ end }}{{ end }}
+    command: plugin-manager --metadata-address 169.254.169.250:9346 --disable-routesync --disable-cni-setup --metadata-listen-port 9346{{ if (eq .Cluster.Orchestration "kubernetes") }} --disable-dns-setup{{ if (ne .Cluster.Embedded "true") }} --disable-macsync --disable-arpsync --disable-conntracksync --disable-vethsync{{ end }}{{ end }}
     environment:
       DOCKER_BRIDGE: docker0
       METADATA_IP: 169.254.169.250
@@ -30,6 +30,9 @@ services:
       {{- if and (eq .Cluster.Orchestration "kubernetes") (eq .Cluster.Embedded "true") }}
       io.rancher.container.orchestration: 'cattle'
       {{- end }}
+    depends_on:
+      metadata:
+        condition: healthylocal
     logging:
       driver: json-file
       options:
@@ -63,6 +66,10 @@ services:
       {{- if and (eq .Cluster.Orchestration "kubernetes") (eq .Cluster.Embedded "true") }}
       io.rancher.container.orchestration: 'cattle'
       {{- end }}
+    depends_on:
+      metadata:
+        condition: healthylocal
+
     logging:
       driver: json-file
       options:
@@ -78,6 +85,11 @@ services:
       {{- end }}
     image: {{$hcImage}}
     command: healthcheck --metadata-address 169.254.169.250
+    depends_on:
+      network-manager:
+        condition: healthylocal
+      cni-driver:
+        condition: healthylocal
     logging:
       driver: json-file
       options:
@@ -106,6 +118,11 @@ services:
     image: {{$netImage}}
     command: sh -c "echo Refer to router sidekick for logs; mkfifo f; exec cat f"
     network_mode: ipsec
+    depends_on:
+      network-manager:
+        condition: healthylocal
+      cni-driver:
+        condition: healthylocal
     ports:
       - 500:500/udp
       - 4500:4500/udp
@@ -148,6 +165,9 @@ services:
     pid: host
     environment:
       RANCHER_DEBUG: '${RANCHER_DEBUG}'
+    depends_on:
+      metadata:
+        condition: healthylocal
     labels:
       io.rancher.scheduler.global: 'true'
       io.rancher.network.cni.binary: 'rancher-bridge'
@@ -197,6 +217,11 @@ services:
     network_mode: vxlan
     ports:
       - 4789:4789/udp
+    depends_on:
+      network-manager:
+        condition: healthylocal
+      cni-driver:
+        condition: healthylocal
     labels:
       io.rancher.sidekicks: router
       io.rancher.scheduler.global: 'true'
@@ -238,6 +263,9 @@ services:
     command: start-cni-driver.sh
     network_mode: host
     pid: host
+    depends_on:
+      metadata:
+        condition: healthylocal
     labels:
       io.rancher.scheduler.global: 'true'
       io.rancher.network.cni.binary: 'rancher-bridge'

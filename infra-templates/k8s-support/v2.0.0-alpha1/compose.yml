@@ -16,6 +16,9 @@ services:
     - kubectl-shell-entry.sh
     image: {{$kubectlImage}}
     privileged: true
+    depends_on:
+    - controller-manager
+    - scheduler
 
 {{- if (eq .Cluster.Embedded "true") }}
   controller-manager:
@@ -36,6 +39,9 @@ services:
     #health_check:
     #  request_line: GET /healthz HTTP/1.0
     #  port: 10252
+    depends_on:
+      core-services/metadata:
+        condition: healthylocal
 
   scheduler:
     command:
@@ -52,6 +58,9 @@ services:
     #health_check:
     #  request_line: GET /healthz HTTP/1.0
     #  port: 10251
+    depends_on:
+      core-services/metadata:
+        condition: healthylocal
 
   kubelet:
     labels:
@@ -89,6 +98,9 @@ services:
     pid: host
     ipc: host
     privileged: true
+    depends_on:
+      core-services/metadata:
+        condition: healthylocal
 
   proxy:
     command:
@@ -103,4 +115,7 @@ services:
       io.rancher.container.orchestration: 'cattle'
     privileged: true
     network_mode: host
+    depends_on:
+      core-services/metadata:
+        condition: healthylocal
 {{- end }}
