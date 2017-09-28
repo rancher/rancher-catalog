@@ -36,14 +36,10 @@ services:
         max-size: 25m
         max-file: '2'
     network_driver:
-      name: Rancher Host Subnet
+      name: Rancher Per Host Subnet
       default_network:
         name: per-host-subnet
         host_ports: true
-        dns:
-        - ${RANCHER_METADATA_ADDRESS}
-        dns_search:
-        - rancher.internal
       cni_config:
         '10-per-host-subnet.conf':
           name: per-host-subnet-network
@@ -62,8 +58,5 @@ services:
             subnet: "__host_label__: io.rancher.network.per_host_subnet.subnet"
             rangeStart: "__host_label__: io.rancher.network.per_host_subnet.range_start"
             rangeEnd: "__host_label__: io.rancher.network.per_host_subnet.range_end"
-            gateway: "__host_label__: io.rancher.network.per_host_subnet.gateway"
             isDebugLevel: ${RANCHER_DEBUG}
             logToFile: /var/log/rancher-cni.log
-            routes:
-            - dst: {{ .Values.RANCHER_METADATA_ADDRESS }}/32
