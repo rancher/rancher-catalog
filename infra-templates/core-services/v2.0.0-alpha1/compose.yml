@@ -1,6 +1,6 @@
 version: '2'
 
-{{- $netManagerImage:="rancher/network-manager:v0.8.6" }}
+{{- $netManagerImage:="rancher/network-manager:v0.8.7" }}
 {{- $netImage:="rancher/net:v0.12.3" }}
 {{- $metadataImage:="rancher/metadata:v1.0.7" }}
 {{- $dnsImage:="rancher/dns:v0.16.4" }}
