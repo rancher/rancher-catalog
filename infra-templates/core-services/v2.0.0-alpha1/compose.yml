@@ -88,8 +88,6 @@ services:
     depends_on:
       network-manager:
         condition: healthylocal
-      cni-driver:
-        condition: healthylocal
     logging:
       driver: json-file
       options:
