@@ -1,17 +1,18 @@
-## Kubernetes v1.7.4
+## Kubernetes v1.7.7
 
 ### Software Versions
 
-* Kubernetes v1.7.4
+* Kubernetes v1.7.7
 * Etcd v2.3.7
 
 ### Upgrading to this Version
 
 Warning: The existing template version _must be_ `v1.2.4-rancher9` or later. Ignoring this will result in data loss. For older templates, please first upgrade to `v1.5.4-rancher1`.
 
-### Changelog for Kubernetes 1.7.4
+### Changelog for Kubernetes 1.7.7
 
-* Added healthcheck to addon-starter
+* Updated for the latest DNS fixes (`k8s-dns-kube-dns-amd64:1.14.5`)
+* Updated for an updated influxDB (`heapster-influxdb-amd64:v1.3.3`)
 
 ### Required Open Ports on hosts
 
