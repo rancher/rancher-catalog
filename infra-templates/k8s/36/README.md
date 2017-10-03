@@ -1,4 +1,4 @@
-## Kubernetes 1.5.4
+## Kubernetes 1.5.8
 
 ### Required Open Ports on hosts
 
