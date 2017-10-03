@@ -1,10 +1,10 @@
 version: '2'
 
-{{- $k8sImage:="rancher/k8s:v1.8.0-rancher3" }}
+{{- $k8sImage:="rancher/k8s:v1.8.0-rancher4" }}
 {{- $etcdImage:="rancher/etcd:v3.0.17-4" }}
-{{- $kubectldImage:="rancher/kubectld:v0.8.4" }}
+{{- $kubectldImage:="rancher/kubectld:v0.8.5" }}
 {{- $etcHostUpdaterImage:="rancher/etc-host-updater:v0.0.3" }}
-{{- $k8sAgentImage:="rancher/kubernetes-agent:v0.6.5" }}
+{{- $k8sAgentImage:="rancher/kubernetes-agent:v0.6.6" }}
 {{- $k8sAuthImage:="rancher/kubernetes-auth:v0.0.8" }}
 {{- $ingressControllerImage:="rancher/lb-service-rancher:v0.7.10" }}
 
@@ -225,6 +225,7 @@ services:
     command:
     - kube-controller-manager
     - --kubeconfig=/etc/kubernetes/ssl/kubeconfig
+    - --allow-untagged-cloud
     - --cloud-provider=${CLOUD_PROVIDER}
     - --address=0.0.0.0
     - --root-ca-file=/etc/kubernetes/ssl/ca.pem
