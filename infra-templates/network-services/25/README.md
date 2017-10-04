@@ -8,7 +8,7 @@ This stack provides the following services:
 
 ### Changelog for v0.2.7
 
-#### Network Manager [rancher/net:v0.7.10]
+#### Network Manager [rancher/network-manager:v0.7.11]
 * Fixes iptables rules reordering issue after docker daemon restart.
 * Ability to log message if MTU mismatch is found.
 * Added support for other network plugins.
