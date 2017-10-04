@@ -20,3 +20,7 @@ KubeDNS is enabled for name resolution as described in the [Kubernetes DNS docs]
 ### Audit Logs
 
 Audit logs can be enabled through a simple option when deploying kubernetes, it will redirect all the Audit logs to the standard output for the kubernetes api container.
+
+### Using in a proxy environment
+
+By setting the HTTP_PROXY parameter, the `HTTP_PROXY`, `HTTPS_PROXY` and `NO_PROXY` environment variables will be added to the kubernetes containers.
