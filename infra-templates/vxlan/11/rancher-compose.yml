@@ -2,6 +2,7 @@
   name: "Rancher VXLAN"
   version: "v0.2.1"
   minimum_rancher_version: v1.6.8-rc1
+  maximum_rancher_version: v1.6.10
   upgrade_from: v0.2.0 || >v0.2.0
   questions:
     - variable: "DOCKER_BRIDGE"
