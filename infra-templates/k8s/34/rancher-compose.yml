@@ -164,6 +164,7 @@ services:
     metadata:
       sans:
       - "IP:${KUBEAPI_CLUSTER_IP}"
+      - "kubernetes.default.svc.cluster.local"
     health_check:
       port: 6443
       interval: 2000
