@@ -1,10 +1,9 @@
 # notemplating
 .catalog:
   name: "Route53 DNS"
-  version: "v0.7.0.1"
+  version: "v0.7.7"
   description: "Rancher External DNS service powered by Amazon Route53."
-  minimum_rancher_version: v1.6.0-rc1
-  maximum_rancher_version: v1.6.10
+  minimum_rancher_version: v1.6.11-rc1
   questions:
     - variable: "AWS_ACCESS_KEY"
       label: "AWS Access Key ID"
@@ -51,6 +50,16 @@
       max: 60000
       default: 10000
       required: true
+    - variable: "ROUTE53_MAX_RETRIES"
+      label: "Maximum number of retries for rate-limited API requests"
+      description: |
+        By default requests that have been rate-limited by Route53 are retried up to 3 times using an incremental backoff.
+        Running this service in a high number of environments might make it necessary to choose a higher number.
+      type: "int"
+      min: 1
+      max: 5
+      default: 3
+      required: false
 
 route53:
   health_check:
@@ -59,4 +68,4 @@ route53:
     unhealthy_threshold: 2
     request_line: GET / HTTP/1.0
     healthy_threshold: 2
-    response_timeout: 5000
+    response_timeout: 8000
