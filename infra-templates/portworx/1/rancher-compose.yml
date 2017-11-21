@@ -37,7 +37,6 @@
 
 
 portworx:
-  labels:
   metadata:
     version: 1
     storageDriverName: "${VOLUME_DRIVE_NAME}"
