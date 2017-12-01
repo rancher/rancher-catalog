@@ -1,8 +1,8 @@
 .catalog:
-  name: "Rancher IPsec"
-  version: "0.2.0"
+  name: "Rancher VXLAN"
+  version: "v0.3.1"
   minimum_rancher_version: v1.6.11-rc1
-  maximum_rancher_version: v1.6.11-rc1
+  upgrade_from: v0.2.0 || >v0.2.0
   questions:
     - variable: "DOCKER_BRIDGE"
       label: "Docker Bridge"
@@ -18,7 +18,7 @@
       type: int
     - variable: "SUBNET"
       label: "Subnet"
-      description: "The subnet to use for the managed IPSEC network."
+      description: "The subnet to use for the managed network."
       type: "string"
       default: '10.42.0.0/16'
       required: true
@@ -51,22 +51,4 @@
       description: "Flag to enable/disable publishing the ports on the hosts"
       type: "boolean"
       default: "true"
-      required: true
-    - variable: "IPSEC_REPLAY_WINDOW_SIZE"
-      label: "IPSec Replay Window size"
-      description: "This option is helpful to adjust the replay window size"
-      type: "string"
-      default: '1024'
-      required: true
-    - variable: "IPSEC_IKE_SA_REKEY_INTERVAL"
-      label: "IPSec IKE_SA rekey interval"
-      description: "Proceed with caution; typical users will not need to change this. Incorrect values can break your Rancher installation."
-      type: "string"
-      default: '4h'
-      required: true
-    - variable: "IPSEC_CHILD_SA_REKEY_INTERVAL"
-      label: "IPSec CHILD_SA rekey time"
-      description: "Proceed with caution; typical users will not need to change this. Incorrect values can break your Rancher installation."
-      type: "string"
-      default: '1h'
       required: true
