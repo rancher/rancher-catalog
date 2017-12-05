@@ -1,7 +1,7 @@
 name: Rancher RBD
 description: |
   Docker volume plugin for Ceph RBD
-version: 0.1.0
+version: 0.1.1
 category: Storage
 labels:
   io.rancher.certified: Experimental
