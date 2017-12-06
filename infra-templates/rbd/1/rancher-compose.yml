@@ -1,10 +1,9 @@
 .catalog:
   name: "Rancher RBD"
-  version: "0.1.0"
+  version: "0.1.1"
   description: |
     Docker volume plugin for Ceph RBD
-  minimum_rancher_version: v1.6.8-rc1
-  maximum_rancher_version: v1.6.12
+  minimum_rancher_version: v1.6.13-rc1
   questions:
   - variable: RANCHER_DEBUG
     label: Debug Mode
