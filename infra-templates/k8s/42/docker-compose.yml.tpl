@@ -196,6 +196,7 @@ kubernetes:
         io.rancher.sidekicks: kube-hostname-updater
         io.rancher.websocket.proxy.port: "6443"
         io.rancher.websocket.proxy.scheme: "https"
+        io.rancher.k8s.service.cluster.ip.range: ${SERVICE_CLUSTER_CIDR}
     command:
         - kube-apiserver
         - --storage-backend=etcd2

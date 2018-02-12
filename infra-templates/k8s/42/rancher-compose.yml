@@ -1,8 +1,8 @@
 .catalog:
   name: Kubernetes
-  version: v1.8.5-rancher4
+  version: v1.8.5-rancher4-1
   description: Rancher Kubernetes service
-  minimum_rancher_version: v1.6.13-rc1
+  minimum_rancher_version: v1.6.14
   questions:
   - variable: CONSTRAINT_TYPE
     label: Plane Isolation
@@ -140,7 +140,7 @@
     default: false
     type: boolean
   - variable: SERVICE_CLUSTER_CIDR
-    label: Service Cluster IP CIDR
+    label: Service Cluster IP Range
     description: A CIDR notation IP range from which to assign service cluster IPs. This must not overlap with any IP ranges assigned to the cluster pod IP CIDR (10.42.0.0/16).
     required: true
     default: "10.43.0.0/16"

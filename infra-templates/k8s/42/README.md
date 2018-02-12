@@ -11,7 +11,7 @@ Warning: The existing template version _must be_ `v1.2.4-rancher9` or later. Ign
 
 ### Changelog for Kubernetes v1.8.5
 
-* Added a fix for a race condition where add-ons might not start
+* Fixed issue with conntrack entries being deleted incorrectly for Service IP range.
 
 ### Required Open Ports on hosts
 
