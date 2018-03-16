@@ -1,4 +1,4 @@
-# Rancher Secrets Bridge v2
+# Rancher Secrets Bridge v2 - Experimental Version
 
 ## Purpose
 
@@ -110,7 +110,7 @@ curl -X POST -H 'X-Vault-Token: <contents of token file>' https://<vault_addr>:<
 
 Using the retrieved token, you can now access Vault within the scope of the assigned policies.
 
-To change the policies of the token, a new volume will need to be created and assigned. By changing the volume from `vault-token-0` to `vault-token-1`, a new volume will be created after upgrading the service using CLI. 
+To change the policies of the token, a new volume will need to be created and assigned. By changing the volume from `vault-token-0` to `vault-token-1`, a new volume will be created after upgrading the service using CLI.
 
 ## Security Considerations
 
@@ -120,4 +120,4 @@ This stack continues with the Rancher environment as the security boundary. Ther
 
 Requesting tokens from a host, require a signed request using the hosts private key file. This signature if verified using the public key stored in Rancher Server. The key pair is generated during the hosts registration process. Signatures are only valid for 5 minutes. The response on a token create request is RSA Encrypted using the hosts public key and is only accessible using the private key of the host that signed the request. This should mitigate replay attacks should a third party obtain a request form the network on a remote host.
 
-The issuing token is delivered via Rancher Secret. It is the most secure method available in Rancher. This does mean at least one host in an environment will contain the Vault issuing token. This token should only be allowed to issue tokens scoped to the Rancher environment it is being used in. 
+The issuing token is delivered via Rancher Secret. It is the most secure method available in Rancher. This does mean at least one host in an environment will contain the Vault issuing token. This token should only be allowed to issue tokens scoped to the Rancher environment it is being used in.
