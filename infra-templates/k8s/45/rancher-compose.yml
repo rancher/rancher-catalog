@@ -1,9 +1,8 @@
 .catalog:
   name: Kubernetes
-  version: v1.9.5-rancher1-1
+  version: v1.10.0-rancher1-2
   description: Rancher Kubernetes service
-  minimum_rancher_version: v1.6.15-rc1
-  maximum_rancher_version: v1.6.15-rc1
+  minimum_rancher_version: v1.6.17-rc1
   questions:
   - variable: CONSTRAINT_TYPE
     label: Plane Isolation
@@ -178,6 +177,12 @@
     description: This is the IP address that will be added as a SAN to the TLS certificate for kubernetes api, this must matches the IP of the kubernetes master service which is the first IP of the Service Cluster IP CIDR.
     required: true
     default: "10.43.0.1"
+    type: string
+  - variable: KUBERNETES_CIPHER_SUITES
+    label: Kubernetes cipher suites
+    description: A comma-separated list of TLS cipher suites to be used by kubernetes api server and kubelet. Available values can be found in (https://golang.org/pkg/crypto/tls/#pkg-constants). The default list is a list of the currently most secure cipher suites.
+    required: true
+    default: "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305"
     type: string
   - variable: DASHBOARD_CPU_LIMIT
     label: Kubernetes Dashboard CPU limit
