@@ -1,8 +1,7 @@
 .catalog:
   name: "Rancher IPsec"
-  version: "0.2.3"
-  minimum_rancher_version: v1.6.15-rc1
-  maximum_rancher_version: v1.6.17
+  version: "0.2.4"
+  minimum_rancher_version: v1.6.18-rc1
   questions:
     - variable: "DOCKER_BRIDGE"
       label: "Docker Bridge"
@@ -88,6 +87,18 @@
       type: "string"
       default: ''
       required: false
+    - variable: "CONNECTIVITY_CHECK_INTERVAL"
+      label: "Interval between connectivity checks for a peer (in milliseconds)"
+      description: "This is an advanced setting and most users will not need to use this. Incorrect values can break your Rancher installation."
+      type: int
+      default: 5000
+      required: true
+    - variable: "PEER_CONNECTION_TIMEOUT"
+      label: "Connection timeout when connecting to a peer (in milliseconds)"
+      description: "This is an advanced setting and most users will not need to use this. Incorrect values can break your Rancher installation."
+      type: int
+      default: 1000
+      required: true
 
 ipsec:
   health_check:
