@@ -155,6 +155,9 @@ proxy:
         - --kubeconfig=/etc/kubernetes/ssl/kubeconfig
         - --v=2
         - --healthz-bind-address=0.0.0.0
+        {{- range $i, $elem := splitPreserveQuotes .Values.ADDITIONAL_KUBEPROXY_FLAGS }}
+        - {{ $elem }}
+        {{- end }}
     image: {{$k8sImage}}
     labels:
         io.rancher.container.dns: "true"
@@ -250,6 +253,9 @@ kubernetes:
         - --authorization-mode=RBAC
         {{- end }}
         - --tls-cipher-suites=${KUBERNETES_CIPHER_SUITES}
+        {{- range $i, $elem := splitPreserveQuotes .Values.ADDITIONAL_KUBEAPI_FLAGS }}
+        - {{ $elem }}
+        {{- end }}
     environment:
         KUBERNETES_URL: https://kubernetes.kubernetes.rancher.internal:6443
         {{- if ne .Values.HTTP_PROXY "" }}
@@ -264,7 +270,6 @@ kubernetes:
         AZURE_SEC_GROUP: ${AZURE_SEC_GROUP}
         AZURE_CLOUD: ${AZURE_CLOUD}
         {{- end }}
-
     image: {{$k8sImage}}
     links:
         - etcd
@@ -319,6 +324,9 @@ scheduler:
         - kube-scheduler
         - --kubeconfig=/etc/kubernetes/ssl/kubeconfig
         - --address=0.0.0.0
+        {{- range $i, $elem := splitPreserveQuotes .Values.ADDITIONAL_KUBESCHEDULER_FLAGS }}
+        - {{ $elem }}
+        {{- end }}
     image: {{$k8sImage}}
     labels:
         {{- if eq .Values.CONSTRAINT_TYPE "required" }}
@@ -342,6 +350,9 @@ controller-manager:
         - --root-ca-file=/etc/kubernetes/ssl/ca.pem
         - --service-account-private-key-file=/etc/kubernetes/ssl/key.pem
         - --horizontal-pod-autoscaler-use-rest-clients=false
+        {{- range $i, $elem := splitPreserveQuotes .Values.ADDITIONAL_KUBECONTROLLERMANAGER_FLAGS }}
+        - {{ $elem }}
+        {{- end }}
     environment:
         CLOUD_PROVIDER: ${CLOUD_PROVIDER}
         {{- if ne .Values.HTTP_PROXY "" }}
