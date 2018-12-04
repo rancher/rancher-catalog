@@ -1,8 +1,8 @@
-## Kubernetes v1.11.2
+## Kubernetes v1.11.5
 
 ### Software Versions
 
-* Kubernetes v1.11.2
+* Kubernetes v1.11.5
 * Etcd v2.3.7
 
 ### Upgrading to this Version
@@ -11,7 +11,7 @@ Warning: The existing template version _must be_ `v1.2.4-rancher9` or later. Ign
 
 Warning: If you are using the `aws` cloud provider, tagging your cluster resources with a `ClusterID` is required in Kubernetes v1.10. This needs to be done before upgrading. Please refer to the [documentation](https://rancher.com/docs/rancher/v1.6/en/kubernetes/providers/#configuring-the-clusterid) on how to tag your cluster resources.
 
-### Changelog for Kubernetes v1.11.2
+### Changelog for Kubernetes v1.11.5
 
 * Added ability to use XFS requires XFS binaries in rancher/k8s image
 * Fixed ingress controller issue where removed ingress instances were synced back to rancher as active ones
