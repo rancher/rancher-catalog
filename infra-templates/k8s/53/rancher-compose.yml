@@ -1,9 +1,8 @@
 .catalog:
   name: Kubernetes
-  version: v1.11.2-rancher1-2
+  version: v1.11.5-rancher1-1
   description: Rancher Kubernetes service
-  minimum_rancher_version: v1.6.22-rc1
-  maximum_rancher_version: v1.6.22-rc1
+  minimum_rancher_version: v1.6.19
   questions:
   - variable: CONSTRAINT_TYPE
     label: Plane Isolation
@@ -120,6 +119,22 @@
     type: int
   - variable: ADDITIONAL_KUBELET_FLAGS
     label: Additional Kubelet Flags
+    required: false
+    type: string
+  - variable: ADDITIONAL_KUBEPROXY_FLAGS
+    label: Additional Kubernetes Proxy Flags
+    required: false
+    type: string
+  - variable: ADDITIONAL_KUBEAPI_FLAGS
+    label: Additional Kubernetes API server Flags
+    required: false
+    type: string
+  - variable: ADDITIONAL_KUBESCHEDULER_FLAGS
+    label: Additional Kubernetes Scheduler Flags
+    required: false
+    type: string
+  - variable: ADDITIONAL_KUBECONTROLLERMANAGER_FLAGS
+    label: Additional Kubernetes Controller Manager Flags
     required: false
     type: string
   - variable: FAIL_ON_SWAP
