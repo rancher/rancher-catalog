@@ -1,9 +1,9 @@
 .catalog:
   name: Kubernetes
-  version: v1.10.3-rancher1-1
+  version: v1.10.11-rancher1-2
   description: Rancher Kubernetes service
-  minimum_rancher_version: v1.6.18-rc1
-  maximum_rancher_version: v1.6.18-rc1
+  minimum_rancher_version: v1.6.18-patch1-rc1
+  maximum_rancher_version: v1.6.21
   questions:
   - variable: CONSTRAINT_TYPE
     label: Plane Isolation
@@ -232,6 +232,13 @@
     required: true
     default: 5000
     type: int
+  - variable: RANCHER_METADATA_ADDRESS
+    label: Address of Rancher Metadata
+    description: The hostname or IP address Rancher metadata can be accessed on
+    required: true
+    default: "169.254.169.250"
+    type: string
+
 
 kubernetes:
     metadata:
@@ -251,6 +258,16 @@ kubernetes:
     retain_ip: true
 
 etcd:
+    metadata:
+        sans:
+        - "IP:127.0.0.1"
+        - "localhost"
+        - "etcd.kubernetes.rancher.internal"
+        - "kubernetes-etcd-1"
+        - "kubernetes-etcd-2"
+        - "kubernetes-etcd-3"
+        - "kubernetes-etcd-4"
+        - "kubernetes-etcd-5"
     retain_ip: true
     scale_policy:
         increment: 1
@@ -258,7 +275,6 @@ etcd:
         min: 1
     health_check:
         port: 2378
-        request_line: GET /health HTTP/1.0
         interval: 5000
         response_timeout: 3000
         unhealthy_threshold: 3
