@@ -1,9 +1,8 @@
 .catalog:
   name: Kubernetes
-  version: v1.11.5-rancher1-1
+  version: v1.12.5-rancher1-1
   description: Rancher Kubernetes service
-  minimum_rancher_version: v1.6.19
-  maximum_rancher_version: v1.6.25
+  minimum_rancher_version: v1.6.26-rc1
   questions:
   - variable: CONSTRAINT_TYPE
     label: Plane Isolation
@@ -254,6 +253,11 @@
     required: true
     default: "169.254.169.250"
     type: string
+  - variable: CLOUD_PROVIDER_CONFIG
+    label: Kubernetes cloud provider config file content
+    description: The contents for the cloud provider config file (for Azure and AWS only)
+    required: false
+    type: multiline
 
 kubernetes:
     metadata:
