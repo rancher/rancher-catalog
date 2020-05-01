@@ -19,7 +19,7 @@ if [ -d "/scratch" ]; then
     rsync -a --exclude .tox ./ /scratch
 fi
 
-pushd /scratch/integration
+pushd ./integration
 
 # Start rancher-catalog-service and wait for it to start.
 /usr/bin/rancher-catalog-service -catalogUrl ../ -refreshInterval 7200 > /dev/null 2>&1 &

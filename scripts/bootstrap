@@ -1,9 +1,6 @@
 #!/bin/bash -x
 
-apt-get update && apt-get install -y curl jq python python-pip
-pip install -U "pip<9"
-pip install -U tox
-pip install -U "more-itertools<6.0.0"
+apt-get update && apt-get install -y curl jq python python-pip python-tox git
 
 ## Get latest rancher-catalog
 download_url=$(curl https://api.github.com/repos/rancher/rancher-catalog-service/releases/latest | jq -r '.assets[]| select(.name == "rancher-catalog-service.tar.xz")| .browser_download_url')

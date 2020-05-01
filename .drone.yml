@@ -9,6 +9,6 @@ platform:
 steps:
 - name: build
   pull: default
-  image: rancher/dind:v0.6.0
+  image: ubuntu:18.04
   commands:
   - ./scripts/ci
